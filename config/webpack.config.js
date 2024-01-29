@@ -16,15 +16,15 @@ function getStyleloader(pre) {
                 plugins: ["postcss-preset-env"]
             }
         }
-    }, pre&&{
-        loader:pre,
-        options:pre == "less-loader"?
-        {
-            lessOptions:{
-                modifyVars:{"@primary-color":"#1da57a"},
-                javascriptEnabled:true
-            }
-        }:{}
+    }, pre && {
+        loader: pre,
+        options: pre == "less-loader" ?
+            {
+                lessOptions: {
+                    modifyVars: { "@primary-color": "#1da57a" },
+                    javascriptEnabled: true
+                }
+            } : {}
     }].filter(Boolean)
 }
 module.exports = {
@@ -74,7 +74,7 @@ module.exports = {
                 options: {
                     cacheDirectory: true,
                     cacheCompression: false,
-                    plugins:[!isProduction &&"react-refresh/babel"].filter(Boolean)
+                    plugins: [!isProduction && "react-refresh/babel"].filter(Boolean)
                 },
             }
         ]
@@ -106,33 +106,33 @@ module.exports = {
         }),
         !isProduction && new ReactRefreshWebpackPlugin()
     ].filter(Boolean),
-    mode:isProduction? "production":"development",
-    devtool:isProduction?  "source-map":"cheap-module-source-map",
+    mode: isProduction ? "production" : "development",
+    devtool: isProduction ? "source-map" : "cheap-module-source-map",
     optimization: {
         splitChunks: {
             chunks: "all",
-            cacheGroups:{
-                react:{
-                    test:/[\\/]node_modules[\\/]react(.*)?[\\/]/,
-                    name:"chunk-react",
-                    priority:40,
+            cacheGroups: {
+                react: {
+                    test: /[\\/]node_modules[\\/]react(.*)?[\\/]/,
+                    name: "chunk-react",
+                    priority: 40,
                 },
-                antd:{
-                    test:/[\\/]node_modules[\\/]antd[\\/]/,
-                    name:"chunk-antd",
-                    priority:30,
+                antd: {
+                    test: /[\\/]node_modules[\\/]antd[\\/]/,
+                    name: "chunk-antd",
+                    priority: 30,
                 },
-                libs:{
-                    test:/[\\/]node_modules[\\/]/,
-                    name:"chunk-libs",
-                    priority:20,
+                libs: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "chunk-libs",
+                    priority: 20,
                 }
             }
         },
         runtimeChunk: {
             name: entrypoint => `runtime~${entrypoint.name}.js`
-        }, 
-        minimize:isProduction,
+        },
+        minimize: isProduction,
         minimizer: [new CssMInimizerWebpackPlugin(), new TerserWebpackPlugin(), new ImageMinimizerWebpackPlugin({
             minimizer: {
                 implementation: ImageMinimizerWebpackPlugin.imageminGenerate,
@@ -159,14 +159,17 @@ module.exports = {
         })]
     },
     resolve: {
-        extensions: [".jsx", ".js", ".json"]
+        extensions: [".jsx", ".js", ".json"],
+        alias: {
+            '@': path.resolve(__dirname, '../src/'), // 将 @ 指向 src 目录
+        }
     },
-    devServer:{
-        host:"localhost",
-        port:3001,
-        open:true,
-        hot:true,
-        historyApiFallback:true
+    devServer: {
+        host: "localhost",
+        port: 3001,
+        open: true,
+        hot: true,
+        historyApiFallback: true
     },
-    performance:false,
+    performance: false,
 }
