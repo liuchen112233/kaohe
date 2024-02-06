@@ -7,8 +7,9 @@
   background-repeat: no-repeat;
   object-fit: cover;
   background-size: 100% 100%;
+  filter: blur(3px);
 }
-.img .loginBox {
+.loginBox {
   background-color: #fff;
   position: absolute;
   top: 55%;
@@ -17,6 +18,6 @@
   border-radius: 12px;
   transform: translateY(-50%);
 }
-.img .footer {
+.footer {
   text-align: center;
 }
