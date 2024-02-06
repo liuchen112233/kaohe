@@ -1,22 +1,22 @@
 import React, { lazy } from "react";
 import { Navigate } from 'react-router-dom'
 
-const Home = lazy(() => import("@/pages/Home"))
-const About = lazy(() => import("@/pages/About"))
-const Error = lazy(() => import("@/pages/Error"))
+const Error = lazy(() => import("@/pages/Error/Error.jsx"))
+const Index = lazy(() => import("@/pages/Index/Index.jsx"))
+const Login = lazy(() => import("@/pages/Login/Login.jsx"))
 
 export const routes = [
     {
         path: "/",
-        element: <Navigate to="/home"/>
+        element: <Navigate to="/index"/>
     },
     {
-        path: "/about",
-        element: <About />
+        path: "/login",
+        element: <Login />
     },
     {
-        path: "/home",
-        element: <Home />
+        path: "/index",
+        element: <Index />
     },
     {
         path: "*",
