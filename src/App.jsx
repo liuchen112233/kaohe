@@ -1,4 +1,5 @@
-import { useRoutes} from "react-router-dom";
+import React from "react";
+import { useRoutes } from "react-router-dom";
 import { routes } from "./router/router";
 import "@/style/index.less";
 import Layout from "./Layout/Layout";
@@ -13,11 +14,7 @@ function App() {
   } = element;
   return (
     <div className="App">
-      {pathname === "/login" ? (
-        <Router></Router>
-      ) : (
-        <Layout></Layout>
-      )}
+      {pathname === "/login" ? <Router></Router> : <Layout></Layout>}
     </div>
   );
 }
