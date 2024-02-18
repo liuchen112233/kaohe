@@ -1,13 +1,13 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-
+import React from "react";
+import Router from "../router/index";
 export default function Layout() {
-    return (
-        <div>
-            <div>Layout</div>
-            <div>
-            </div>
-        </div>
-
-    )
+    console.log(Router);
+  return (
+    <div>
+      <div>Layout</div>
+      <div>
+        <Router></Router>
+      </div>
+    </div>
+  );
 }

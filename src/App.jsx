@@ -1,12 +1,24 @@
-import React, { Suspense } from "react";
-import { Link, Routes, Route, Navigate } from "react-router-dom"
-import "@/style/index.less"
-import { Layout } from "@/Layout/Layout.jsx"
-import Router from './router/index';
+import { useRoutes} from "react-router-dom";
+import { routes } from "./router/router";
+import "@/style/index.less";
+import Layout from "./Layout/Layout";
+import Router from "./router/index";
 function App() {
-    return (
-        <div className="App">
-            <Router></Router>
-        </div>)
+  const element = useRoutes(routes);
+  console.log(element);
+  const {
+    props: {
+      match: { pathname },
+    },
+  } = element;
+  return (
+    <div className="App">
+      {pathname === "/login" ? (
+        <Router></Router>
+      ) : (
+        <Layout></Layout>
+      )}
+    </div>
+  );
 }
-export default App
+export default App;
