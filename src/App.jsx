@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { Suspense } from "react";
 import { Link, Routes, Route, Navigate } from "react-router-dom"
 import "@/style/index.less"
 import { Layout } from "@/Layout/Layout.jsx"

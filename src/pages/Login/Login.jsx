@@ -5,13 +5,13 @@ import { login } from "@/api/api.js";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [form] = Form.useForm();
-  const navagate = useNavigate();
+  const navigate = useNavigate();
   const loginTo = async () => {
     try {
       let values = await form.validateFields();
       login(values).then((res) => {
         console.log(res);
-        navagate("/index");
+        navigate("/index");
       });
     } catch (error) {
       console.log(error);
