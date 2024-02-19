@@ -26,6 +26,133 @@ const menu = [
         label: "会员中心",
         path: '/member'
     },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+    {
+        key: uuid.v4(),
+        icon: <SketchOutlined />,
+        label: "会员中心",
+        path: '/member'
+    },
+
 ]
 
 export default menu

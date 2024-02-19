@@ -7,8 +7,10 @@ const { Sider } = Layout;
 
 export default function SiderCom() {
   const navigate = useNavigate();
-  const [showMenu,setShowMenu] = useState(true)
-  const [controlWidth,setcontrolWidth] = useState('200px')
+  const [showMenu, setShowMenu] = useState(false);
+  const [controlWidth, setcontrolWidth] = useState("200px");
+  const menuHeight = window.innerHeight-64-46 + 'px'
+
   //跳转路由
   const toPage = (item, key, keyPath, domEvent) => {
     if (item.keyPath.length == 1) {
@@ -21,7 +23,6 @@ export default function SiderCom() {
           obj = getObj(el, obj);
         } else {
           obj = menu.find((item) => item.key === el);
-          console.log(obj);
         }
       });
       navigate(obj.path);
@@ -35,10 +36,10 @@ export default function SiderCom() {
       return obj;
     }
   };
-  const closeMenu = ()=>{
-    setcontrolWidth(showMenu?'200px':'80px')
-    setShowMenu(!showMenu)
-  }
+  const closeMenu = () => {
+    setcontrolWidth(showMenu ? "200px" : "80px");
+    setShowMenu(!showMenu);
+  };
   return (
     <Sider
       width={200}
@@ -46,23 +47,47 @@ export default function SiderCom() {
       trigger={null}
       style={{
         backgroundColor: "#fff",
-        position:"relative"
+        position: "relative",
       }}
     >
-      <Menu
-        mode="inline"
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
-        style={{
-          height: "100%",
-          borderRight: 0,
-        }}
-        onClick={toPage}
-        items={menu}
-      />
-      <div style={{display:'flex',position:"fixed",bottom:'0',width:controlWidth,justifyContent:!showMenu?'flex-end':'center',height:'46px',lineHeight:'46px',borderTop:"1px solid #EFEFEF",fontSize:'16px'}}>
-        <div style={{marginRight:'10px',display:!showMenu?'block':'none'}}>点击收起菜单</div>
-        <MenuFoldOutlined onClick={closeMenu} style={{cursor:"pointer"}}/>
+      <div style={{height:menuHeight,overflowY:"scroll",padding:'10px0'}}>
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          style={{
+            height: "100%",
+            borderRight: 0,
+          }}
+          onClick={toPage}
+          items={menu}
+        />
+        <div
+          style={{
+            display: "flex",
+            position: "fixed",
+            bottom: "0",
+            width: controlWidth,
+            justifyContent: !showMenu ? "flex-end" : "center",
+            height: "46px",
+            lineHeight: "46px",
+            paddingRight: !showMenu ? "16px" : 0,
+            backgroundColor: "#fff",
+            borderTop: "1px solid #EFEFEF",
+            fontSize: "16px",
+          }}
+        >
+          <div
+            style={{
+              textAlign: "right",
+              marginRight: "10px",
+              display: !showMenu ? "block" : "none",
+              backgroundColor: "#fff",
+            }}
+          >
+            点击收起菜单
+          </div>
+          <MenuFoldOutlined onClick={closeMenu} style={{ cursor: "pointer" }} />
+        </div>
       </div>
     </Sider>
   );

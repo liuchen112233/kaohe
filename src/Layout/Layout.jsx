@@ -24,6 +24,7 @@ export default function LayoutCom() {
               padding: 24,
               margin: 0,
               minHeight: 280,
+              height:'3000px',
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}
