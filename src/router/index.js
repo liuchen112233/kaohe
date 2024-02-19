@@ -19,7 +19,6 @@ const Authen = (props) => {
     const navigate = useNavigate()
     const { route, children } = props
     const username = sessionStorage.getItem('username')
-    console.log(props);
     useEffect(() => {
         if (route.props.match.pathname === "/login" && username) {
             navigate('/index')

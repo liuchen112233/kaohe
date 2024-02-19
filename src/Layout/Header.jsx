@@ -74,7 +74,6 @@ export default function HeaderCom() {
               transform: `translateY(60%)`,
               cursor: "pointer",
               backgroundColor: "#999",
-            //   opacity: 0.5,
             }}
           >
             退出

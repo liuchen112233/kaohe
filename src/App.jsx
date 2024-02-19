@@ -6,7 +6,6 @@ import Layout from "./Layout/Layout";
 import Router from "./router/index";
 function App() {
   const element = useRoutes(routes);
-  console.log(element);
   const {
     props: {
       match: { pathname },
