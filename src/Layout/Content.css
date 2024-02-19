@@ -1,0 +1,18 @@
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab + .ant-tabs-tab,
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-tabs-card.ant-tabs-bottom > .ant-tabs-nav .ant-tabs-tab + .ant-tabs-tab,
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-tabs-card.ant-tabs-top > div > .ant-tabs-nav .ant-tabs-tab + .ant-tabs-tab,
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-tabs-card.ant-tabs-bottom > div > .ant-tabs-nav .ant-tabs-tab + .ant-tabs-tab,
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab-active,
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-tabs-card.ant-tabs-top > div > .ant-tabs-nav .ant-tabs-tab-active {
+  margin-right: 8px;
+  border-radius: 8px;
+}
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-tabs-top > .ant-tabs-nav::before,
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-tabs-bottom > .ant-tabs-nav::before,
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-tabs-top > div > .ant-tabs-nav::before,
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-tabs-bottom > div > .ant-tabs-nav::before {
+  border: none;
+}
+.ant-tabs-nav {
+  margin-bottom: 8px !important;
+}

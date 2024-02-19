@@ -1,14 +1,10 @@
 import React from "react";
-import Router from "../router/index";
 import Header from "./Header";
 import Sider from "./Sider";
+import Content from "./Content";
 import { Layout, theme } from "antd";
-const { Content } = Layout;
 
 export default function LayoutCom() {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
   return (
     <Layout>
       <Header />
@@ -19,18 +15,7 @@ export default function LayoutCom() {
             padding: "0 24px 24px",
           }}
         >
-          <Content
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-              height:'3000px',
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <Router></Router>
-          </Content>
+          <Content />
         </Layout>
       </Layout>
     </Layout>
