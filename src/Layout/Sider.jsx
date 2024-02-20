@@ -2,7 +2,7 @@ import menu from "../menu/menu";
 import { useSelector, useDispatch } from "react-redux";
 import { changeActiveKey,openMenu,changeactiveMenu } from "@/redux/routerSlice.js";
 import { MenuFoldOutlined } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 const { Sider } = Layout;
@@ -31,6 +31,7 @@ export default function SiderCom() {
         }
       });
     }
+    
     const tab = tabList.find(el=>el.label==obj.label)
     if(tab){
       dispatch(changeActiveKey(tab.key))
@@ -59,6 +60,7 @@ export default function SiderCom() {
     setcontrolWidth(showMenu ? "200px" : "80px");
     setShowMenu(!showMenu);
   };
+
   return (
     <Sider
       width={200}

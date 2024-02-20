@@ -10,18 +10,26 @@ const routerSlice = createSlice({
                 key: "1",
                 closeIcon: false,
                 path: "/index",
-                menuKey:["1"]
+                menuKey: ["1"]
             },
         ],
         activeKey: "1",
-        activeMenu: "1",
+        activeMenu: ["1"],
     },
     reducers: {
+        //打开菜单
         openMenu(state, action) {
+            console.log(state.tabList);
             state.tabList.push(action.payload)
         },
+        //关闭菜单
         closeMenu(state, action) {
-
+            const index = state.tabList.findIndex(el => el.key === action.payload)
+            if (index !== 0 && index === state.tabList.length - 1 && state.tabList[index].key === state.activeKey) {
+                state.activeKey = state.tabList[index - 1].key
+                state.activeMenu = state.tabList[index - 1].menuKey
+            }
+            state.tabList.splice(index, 1)
         },
         changeActiveKey(state, action) {
             state.activeKey = action.payload
@@ -33,7 +41,7 @@ const routerSlice = createSlice({
 })
 
 export default routerSlice.reducer;
-export const { changeActiveKey, openMenu, changeactiveMenu } = routerSlice.actions
+export const { changeActiveKey, openMenu, changeactiveMenu, closeMenu } = routerSlice.actions
 //创建异步方法
 export const getData = createAsyncThunk("order/fetchDemoData", async (data, { dispatch }) => {
 

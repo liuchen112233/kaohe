@@ -1,7 +1,11 @@
 import React, { useMemo, useState } from "react";
 import Router from "../router/index";
 import { useSelector, useDispatch } from "react-redux";
-import { changeActiveKey,changeactiveMenu } from "@/redux/routerSlice.js";
+import {
+  changeActiveKey,
+  changeactiveMenu,
+  closeMenu,
+} from "@/redux/routerSlice.js";
 import { useNavigate } from "react-router-dom";
 import {
   LeftOutlined,
@@ -24,8 +28,29 @@ export default function ContentCom() {
   const clickTab = (key, e) => {
     dispatch(changeActiveKey(key));
     const obj = tabList.find((el) => el.key == key);
-    dispatch(changeactiveMenu(obj.menuKey))
+    dispatch(changeactiveMenu(obj.menuKey));
     navigate(obj.path);
+  };
+  const onEdit = (targetKey, action) => {
+    console.log(action, targetKey);
+    if (action === "remove") {
+      remove(targetKey);
+    }
+  };
+  const remove = (targetKey) => {
+    const index = tabList.findIndex((el) => el.key === targetKey);
+    if (
+      index !== 0 &&
+      index === tabList.length - 1 &&
+      tabList[index].key === activeKey
+    ) {
+      console.log(444);
+      let path = tabList[index - 1].path;
+      if (path) {
+        navigate(path);
+      }
+    }
+    dispatch(closeMenu(targetKey));
   };
   return (
     <div>
@@ -53,6 +78,7 @@ export default function ContentCom() {
               </div>
             ),
           }}
+          onEdit={onEdit}
           type="editable-card"
           activeKey={activeKey}
           hideAdd
