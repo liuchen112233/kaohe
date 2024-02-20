@@ -5,6 +5,7 @@ import {
   changeActiveKey,
   changeactiveMenu,
   closeMenu,
+  closeAllMenu
 } from "@/redux/routerSlice.js";
 import { useNavigate } from "react-router-dom";
 import {
@@ -52,6 +53,23 @@ export default function ContentCom() {
     }
     dispatch(closeMenu(targetKey));
   };
+  const prevNav = () => {
+    const index = tabList.findIndex((el) => el.key === activeKey);
+    let key = "";
+    key = tabList[index - 1].key;
+    clickTab(key);
+  };
+  const nextNav = () => {
+    const index = tabList.findIndex((el) => el.key === activeKey);
+    let key = "";
+    key = tabList[index + 1].key;
+    clickTab(key);
+  };
+  const closeAll = () => {
+    dispatch(closeAllMenu())
+    navigate('/index')
+  };
+
   return (
     <div>
       <div style={{ marginTop: "8px" }}>
@@ -61,7 +79,8 @@ export default function ContentCom() {
               <Button
                 style={{ marginRight: "8px" }}
                 icon={<LeftOutlined />}
-                onClick
+                disabled={activeKey === "1"}
+                onClick={prevNav}
                 className="tabs-extra-demo-button"
               ></Button>
             ),
@@ -69,11 +88,15 @@ export default function ContentCom() {
               <div>
                 <Button
                   style={{ marginLeft: "8px" }}
+                  disabled={tabList.length === 1}
+                  onClick={nextNav}
                   icon={<RightOutlined />}
                 ></Button>
                 <Button
                   style={{ marginLeft: "8px" }}
                   icon={<CloseCircleOutlined />}
+                  onClick={closeAll}
+                  disabled={tabList.length === 1}
                 ></Button>
               </div>
             ),
