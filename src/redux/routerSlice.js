@@ -9,6 +9,7 @@ const routerSlice = createSlice({
                 label: '工作台',
                 key: "1",
                 closeIcon:false,
+                path:"/index"
             },
             // {
             //     label: '会员中心',

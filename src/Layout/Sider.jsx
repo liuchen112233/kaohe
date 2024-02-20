@@ -36,7 +36,8 @@ export default function SiderCom() {
     }else{
       const tabObj = {
         label:obj.label,
-        key:uuid.v4()
+        key:uuid.v4(),
+        path:obj.path
       }
       dispatch(openMenu(tabObj))
       dispatch(changeActiveKey(tabObj.key))

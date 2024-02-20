@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
 import Router from "../router/index";
 import { useSelector, useDispatch } from "react-redux";
-// import { init } from "@/redux/routerSlice.js";
-
+import { changeActiveKey } from "@/redux/routerSlice.js";
+import { useNavigate } from "react-router-dom";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Layout, theme, Button, Tabs, Breadcrumb } from "antd";
 import "./Content.less";
@@ -21,8 +21,9 @@ const OperationsSlot = {
 };
 
 export default function ContentCom() {
-  const { activeKey,tabList } = useSelector((state) => state.routerSlice);
-
+  const { activeKey, tabList } = useSelector((state) => state.routerSlice);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -39,6 +40,11 @@ export default function ContentCom() {
       {}
     );
   }, [position]);
+  const clickTab = (key,e) => {
+    dispatch(changeActiveKey(key))
+    const obj = tabList.find(el=>el.key==key)
+    navigate(obj.path)
+  };
   return (
     <div>
       <div style={{ marginTop: "8px" }}>
@@ -48,6 +54,7 @@ export default function ContentCom() {
           activeKey={activeKey}
           hideAdd
           items={tabList}
+          onTabClick={clickTab}
         />
       </div>
       <div style={{ marginBottom: "8px" }}>
