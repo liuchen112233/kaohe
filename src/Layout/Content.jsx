@@ -1,5 +1,8 @@
 import React, { useMemo, useState } from "react";
 import Router from "../router/index";
+import { useSelector, useDispatch } from "react-redux";
+// import { init } from "@/redux/routerSlice.js";
+
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Layout, theme, Button, Tabs, Breadcrumb } from "antd";
 import "./Content.less";
@@ -16,20 +19,16 @@ const OperationsSlot = {
     <Button style={{ marginLeft: "8px" }} icon={<RightOutlined />}></Button>
   ),
 };
-const items = new Array(50).fill(null).map((_, i) => {
-  const id = String(i + 1);
-  return {
-    label: `Tab ${id}`,
-    key: id,
-  };
-});
+
 export default function ContentCom() {
+  const { activeKey,tabList } = useSelector((state) => state.routerSlice);
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const [position, setPosition] = useState(["left", "right"]);
-  const contentHeight = window.innerHeight-64-48-22-40 + 'px'
+  const contentHeight = window.innerHeight - 64 - 48 - 22 - 40 + "px";
   const slot = useMemo(() => {
     if (position.length === 0) return null;
     return position.reduce(
@@ -46,8 +45,9 @@ export default function ContentCom() {
         <Tabs
           tabBarExtraContent={slot}
           type="editable-card"
+          activeKey={activeKey}
           hideAdd
-          items={items}
+          items={tabList}
         />
       </div>
       <div style={{ marginBottom: "8px" }}>
@@ -69,7 +69,13 @@ export default function ContentCom() {
           ]}
         />
       </div>
-      <div style={{height:contentHeight,overflowY:'scroll',borderRadius:'8px'}}>
+      <div
+        style={{
+          height: contentHeight,
+          overflowY: "scroll",
+          borderRadius: "8px",
+        }}
+      >
         <Content
           style={{
             padding: 24,
