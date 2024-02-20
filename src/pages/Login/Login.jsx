@@ -3,6 +3,7 @@ import "./Login.less";
 import { Button, Form, Input } from "antd";
 import { login } from "@/api/api.js";
 import { useNavigate } from "react-router-dom";
+import { notification } from 'antd';
 export default function Login() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -10,7 +11,10 @@ export default function Login() {
     try {
       let values = await form.validateFields();
       login(values).then((res) => {
-        console.log(res);
+        notification.success({
+          message:"提示",
+          description:"登录成功"
+      })
         navigate("/index");
       });
     } catch (error) {

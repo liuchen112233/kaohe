@@ -73,7 +73,7 @@ export default function SiderCom() {
             paddingRight: !showMenu ? "16px" : 0,
             backgroundColor: "#fff",
             borderTop: "1px solid #EFEFEF",
-            fontSize: "16px",
+            fontSize: "14px",
           }}
         >
           <div
