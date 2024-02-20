@@ -69,7 +69,10 @@ export default function ContentCom() {
     dispatch(closeAllMenu())
     navigate('/index')
   };
-
+  const islast = useMemo(()=>{
+    const index = tabList.findIndex(el=>el.key===activeKey)
+    return index === tabList.length-1
+  },[activeKey])
   return (
     <div>
       <div style={{ marginTop: "8px" }}>
@@ -88,7 +91,7 @@ export default function ContentCom() {
               <div>
                 <Button
                   style={{ marginLeft: "8px" }}
-                  disabled={tabList.length === 1}
+                  disabled={tabList.length === 1 || islast}
                   onClick={nextNav}
                   icon={<RightOutlined />}
                 ></Button>
