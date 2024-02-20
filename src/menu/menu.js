@@ -3,7 +3,7 @@ import { FundProjectionScreenOutlined, SketchOutlined, TeamOutlined } from '@ant
 const uuid = require('uuid')
 const menu = [
     {
-        key: uuid.v4(),
+        key: "1",
         icon: <FundProjectionScreenOutlined />,
         label: "工作台",
         path: '/index'

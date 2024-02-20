@@ -1,55 +1,58 @@
 import React, { useMemo, useState } from "react";
 import Router from "../router/index";
 import { useSelector, useDispatch } from "react-redux";
-import { changeActiveKey } from "@/redux/routerSlice.js";
+import { changeActiveKey,changeactiveMenu } from "@/redux/routerSlice.js";
 import { useNavigate } from "react-router-dom";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import {
+  LeftOutlined,
+  RightOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
 import { Layout, theme, Button, Tabs, Breadcrumb } from "antd";
 import "./Content.less";
 const { Content } = Layout;
-const OperationsSlot = {
-  left: (
-    <Button
-      style={{ marginRight: "8px" }}
-      icon={<LeftOutlined />}
-      className="tabs-extra-demo-button"
-    ></Button>
-  ),
-  right: (
-    <Button style={{ marginLeft: "8px" }} icon={<RightOutlined />}></Button>
-  ),
-};
 
 export default function ContentCom() {
   const { activeKey, tabList } = useSelector((state) => state.routerSlice);
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-
-  const [position, setPosition] = useState(["left", "right"]);
   const contentHeight = window.innerHeight - 64 - 48 - 22 - 40 + "px";
-  const slot = useMemo(() => {
-    if (position.length === 0) return null;
-    return position.reduce(
-      (acc, direction) => ({
-        ...acc,
-        [direction]: OperationsSlot[direction],
-      }),
-      {}
-    );
-  }, [position]);
-  const clickTab = (key,e) => {
-    dispatch(changeActiveKey(key))
-    const obj = tabList.find(el=>el.key==key)
-    navigate(obj.path)
+
+  const clickTab = (key, e) => {
+    dispatch(changeActiveKey(key));
+    const obj = tabList.find((el) => el.key == key);
+    dispatch(changeactiveMenu(obj.menuKey))
+    navigate(obj.path);
   };
   return (
     <div>
       <div style={{ marginTop: "8px" }}>
         <Tabs
-          tabBarExtraContent={slot}
+          tabBarExtraContent={{
+            left: (
+              <Button
+                style={{ marginRight: "8px" }}
+                icon={<LeftOutlined />}
+                onClick
+                className="tabs-extra-demo-button"
+              ></Button>
+            ),
+            right: (
+              <div>
+                <Button
+                  style={{ marginLeft: "8px" }}
+                  icon={<RightOutlined />}
+                ></Button>
+                <Button
+                  style={{ marginLeft: "8px" }}
+                  icon={<CloseCircleOutlined />}
+                ></Button>
+              </div>
+            ),
+          }}
           type="editable-card"
           activeKey={activeKey}
           hideAdd

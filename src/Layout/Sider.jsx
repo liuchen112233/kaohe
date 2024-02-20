@@ -1,8 +1,8 @@
 import menu from "../menu/menu";
 import { useSelector, useDispatch } from "react-redux";
-import { changeActiveKey,openMenu } from "@/redux/routerSlice.js";
+import { changeActiveKey,openMenu,changeactiveMenu } from "@/redux/routerSlice.js";
 import { MenuFoldOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 const { Sider } = Layout;
@@ -15,7 +15,8 @@ export default function SiderCom() {
   const [controlWidth, setcontrolWidth] = useState("200px");
   const menuHeight = window.innerHeight-64-46 + 'px'
   const dispatch = useDispatch()
-  let { tabList } = useSelector((state) => state.routerSlice);
+  let { tabList,activeMenu } = useSelector((state) => state.routerSlice);
+
   //跳转路由
   const toPage = (item, key, keyPath, domEvent) => {
     let obj = null
@@ -37,11 +38,13 @@ export default function SiderCom() {
       const tabObj = {
         label:obj.label,
         key:uuid.v4(),
-        path:obj.path
+        path:obj.path,
+        menuKey:item.keyPath
       }
       dispatch(openMenu(tabObj))
       dispatch(changeActiveKey(tabObj.key))
     }
+    dispatch(changeactiveMenu(obj.key))
     navigate(obj.path);
   };
   const getObj = (el, obj) => {
@@ -76,6 +79,7 @@ export default function SiderCom() {
           }}
           onClick={toPage}
           items={menu}
+          selectedKeys={activeMenu}
         />
         <div
           style={{
