@@ -48,12 +48,10 @@ export default function ContentCom(props) {
         ),
       });
     } else {
-      console.log(obj.menuKeypath);
       [...obj.menuKeypath].forEach((el) => {
         if (obj2) {
           obj2 = getObj(el, obj2);
         } else {
-          console.log(el,menu);
           obj2 = menu.find((item) => item.key === el);
         }
         arr.push({
@@ -70,7 +68,7 @@ export default function ContentCom(props) {
 
     navigate(obj.path);
   };
-  
+
   //剥层方法
   const getObj = (el, obj) => {
     const { children } = obj;

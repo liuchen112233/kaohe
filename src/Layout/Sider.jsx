@@ -37,7 +37,6 @@ export default function SiderCom(props) {
         ),
       });
     } else {
-      console.log(item,menu);
       item.keyPath.reverse().forEach((el) => {
         if (obj) {
           obj = getObj(el, obj);

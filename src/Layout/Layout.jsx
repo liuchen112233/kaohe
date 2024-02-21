@@ -17,8 +17,8 @@ export default function LayoutCom() {
       href: "/index",
     },
   ]);
+  //修改面包屑数据
   const changeBreadData = (val)=>{
-    console.log(val);
     setBreadData(val)
   }
   return (
