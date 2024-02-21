@@ -1,0 +1,97 @@
+.box {
+  background-color: #fff;
+  padding: 16px 16px 3px 16px;
+  box-shadow: 0px 1px 10px 0px rgba(0, 77, 208, 0.16);
+  border-radius: 4px;
+}
+.box .title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+.box .title div:first-child {
+  white-space: nowrap;
+  position: relative;
+}
+.box .title div:first-child .tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  background-color: red;
+  font-size: 8px;
+  color: #fff;
+  border-radius: 50% 50% 50% 0;
+  transform: translateX(100%);
+}
+.box .title div:last-child {
+  color: #999999;
+}
+.box .content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 13px;
+  color: #999999;
+}
+.box .content div:first-child {
+  width: 60%;
+}
+.box .content div:last-child {
+  color: red;
+}
+.info {
+  margin-top: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px;
+}
+.info .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+.info .head div:first-child {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+.info .head div:first-child span:first-child {
+  width: 4px;
+  height: 16px;
+  background-color: #1D70F5;
+  margin-right: 12px;
+}
+.info .head div:last-child {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+.info .head div:last-child span {
+  font-size: 14px;
+  color: #999999;
+}
+.info .infoData {
+  display: flex;
+  justify-content: space-around;
+}
+.info .infoData div {
+  margin-bottom: 8px;
+}
+.info .infoData div div:first-child {
+  font-size: 32px;
+}
+.info .infoData div div:last-child {
+  font-size: 14px;
+  color: #555555;
+}
+.info .infoData div:first-child div:first-child {
+  color: #F37A1D;
+}

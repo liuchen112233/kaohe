@@ -188,6 +188,7 @@ export default function ContentCom(props) {
         style={{
           height: contentHeight,
           overflowY: "scroll",
+          overflowX: "hidden",
           borderRadius: "8px",
         }}
       >
@@ -196,7 +197,6 @@ export default function ContentCom(props) {
             padding: 24,
             margin: 0,
             minHeight: 280,
-            height: "3000px",
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}

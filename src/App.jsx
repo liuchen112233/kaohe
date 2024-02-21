@@ -4,7 +4,6 @@ import store from "./redux/store.js";
 import { Provider } from "react-redux";
 import { routes } from "./router/router";
 
-import "@/style/index.less";
 import Layout from "./Layout/Layout";
 import Router from "./router/index";
 import "./App.less"

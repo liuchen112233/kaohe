@@ -49,8 +49,8 @@ export default function LayoutCom() {
       return obj;
     }
   };
-  //首次加载时查询tab缓存
   useMemo(() => {
+    //首次加载时查询tab缓存
     const tabobj = JSON.parse(sessionStorage.getItem("tabObj"));
     if (tabobj) {
       dispatch(changeActiveKey(tabobj.key));

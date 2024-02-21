@@ -1,3 +1,119 @@
-.head{
-    color: deeppink
+.box {
+    background-color: #fff;
+    padding: 16px 16px 3px 16px;
+    box-shadow: 0px 1px 10px 0px rgba(0, 77, 208, 0.16);
+    border-radius: 4px;
+
+    // min-width: 238px;
+    .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+
+        div:first-child {
+            white-space: nowrap;
+            position: relative;
+
+            .tag {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 16px;
+                height: 16px;
+                line-height: 16px;
+                background-color: red;
+                font-size: 8px;
+                color: #fff;
+                border-radius: 50% 50% 50% 0;
+                transform: translateX(100%);
+            }
+        }
+
+        div:last-child {
+            color: #999999;
+        }
+    }
+
+    .content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 13px;
+        color: #999999;
+
+        div:first-child {
+            width: 60%;
+        }
+
+        div:last-child {
+            color: red;
+        }
+    }
+}
+
+.info {
+    margin-top: 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 16px;
+
+    .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
+        margin-bottom: 16px;
+
+        div:first-child {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+
+            span:first-child {
+                width: 4px;
+                height: 16px;
+                background-color: #1D70F5;
+                margin-right: 12px;
+            }
+        }
+
+        div:last-child {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+
+            span {
+                font-size: 14px;
+                color: #999999;
+            }
+        }
+    }
+
+    .infoData {
+        display: flex;
+        justify-content: space-around;
+
+        div {
+            margin-bottom: 8px;
+
+            div:first-child {
+                font-size: 32px;
+            }
+
+            div:last-child {
+                font-size: 14px;
+                color: #555555;
+            }
+        }
+
+        div:first-child {
+            div:first-child {
+                color: #F37A1D;
+
+            }
+        }
+    }
 }
