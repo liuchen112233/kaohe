@@ -1,18 +1,21 @@
+import menu from "../menu/menu";
 import logo from "@/assets/images/logo1.png";
 import touxiang from "@/assets/images/touxiang.png";
 import React, { useState } from "react";
 import { DownOutlined } from "@ant-design/icons";
 import { Layout, Image } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 const { Header } = Layout;
 
-export default function HeaderCom() {
+export default function HeaderCom(props) {
   const username = sessionStorage.getItem("username");
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const showLogout = () => {
     setShow(!show);
   };
+
   const logout = () => {
     sessionStorage.clear();
     navigate("/login");
@@ -67,7 +70,7 @@ export default function HeaderCom() {
               border: "1px solid #fff",
               borderRadius: "6px",
               lineHeight: "normal",
-              textAlign:'center',
+              textAlign: "center",
               padding: "5px",
               bottom: -10,
               right: 0,

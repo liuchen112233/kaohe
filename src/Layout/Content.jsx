@@ -116,7 +116,6 @@ export default function ContentCom(props) {
   const closeAll = () => {
     dispatch(closeAllMenu());
     navigate("/index");
-    console.log(tabList);
     //修改breadData
     let arr=[]
     const obj = menu.find(el=>el.key=='1')
@@ -141,7 +140,6 @@ export default function ContentCom(props) {
   useEffect(() => {
     const obj = tabList.find((el) => el.key === activeKey);
     sessionStorage.setItem("tabObj", JSON.stringify(obj));
-    sessionStorage.setItem("menu",JSON.stringify(menu))
   }, [activeKey]);
 
   return (

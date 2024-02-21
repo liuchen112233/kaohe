@@ -4,6 +4,7 @@ import Header from "./Header";
 import Sider from "./Sider";
 import Content from "./Content";
 import { useSelector, useDispatch } from "react-redux";
+import { closeAllMenu } from "@/redux/routerSlice.js";
 import {
   openMenu,
   changeActiveKey,
@@ -51,51 +52,63 @@ export default function LayoutCom() {
   //首次加载时查询tab缓存
   useMemo(() => {
     const tabobj = JSON.parse(sessionStorage.getItem("tabObj"));
-    dispatch(changeActiveKey(tabobj.key));
-    dispatch(changeactiveMenu(tabobj.menuKeypath));
-    if (tabobj.key != "1") {
-      //控制台
-      dispatch(openMenu(tabobj));
-    }
-    //关联面包屑
-    const obj = menu.find((el) => el.key === tabobj.menuKey);
-    if (obj) {
-      console.log(obj);
-      setBreadData([
-        {
-          title: (
-            <div>
-              {obj.icon}
-              <span style={{ marginLeft: "5px" }}>{obj.label}</span>
-            </div>
-          ),
-        },
-      ]);
-    } else {
-      let menuObj = null;
-      let arr = [];
-      tabobj.menuKeypath.forEach((el) => {
-        if (menuObj) {
-          menuObj = getBreadObj(el, menuObj);
-        } else {
-          menuObj = menu.find((item) => item.key === el);
-        }
-        arr.push({
-          title: (
-            <div>
-              {menuObj.icon}
-              <span style={{ marginLeft: "5px" }}>{menuObj.label}</span>
-            </div>
-          ),
+    if (tabobj) {
+      dispatch(changeActiveKey(tabobj.key));
+      dispatch(changeactiveMenu(tabobj.menuKeypath));
+      if (tabobj.key != "1") {
+        //控制台
+        dispatch(openMenu(tabobj));
+      }
+      //关联面包屑
+      const obj = menu.find((el) => el.key === tabobj.menuKey);
+      if (obj) {
+        setBreadData([
+          {
+            title: (
+              <div>
+                {obj.icon}
+                <span style={{ marginLeft: "5px" }}>{obj.label}</span>
+              </div>
+            ),
+          },
+        ]);
+      } else {
+        let menuObj = null;
+        let arr = [];
+        tabobj.menuKeypath.forEach((el) => {
+          if (menuObj) {
+            menuObj = getBreadObj(el, menuObj);
+          } else {
+            menuObj = menu.find((item) => item.key === el);
+          }
+          arr.push({
+            title: (
+              <div>
+                {menuObj.icon}
+                <span style={{ marginLeft: "5px" }}>{menuObj.label}</span>
+              </div>
+            ),
+          });
+          setBreadData(arr);
         });
-        setBreadData(arr);
-      });
+      }
+    }else{
+      const obj = menu[0] //工作台
+      dispatch(closeAllMenu());
+      setBreadData([{
+        title: (
+          <div>
+            {obj.icon}
+            <span style={{ marginLeft: "5px" }}>{obj.label}</span>
+          </div>
+        ),
+      }]);
     }
   }, []);
 
   return (
     <Layout>
-      <Header />
+      <Header changeBreadData={changeBreadData}/>
       <Layout>
         <Sider changeBreadData={changeBreadData} />
         <Layout
