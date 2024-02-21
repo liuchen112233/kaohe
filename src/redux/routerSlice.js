@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-
 const routerSlice = createSlice({
     name: "demo",
     initialState: {
@@ -10,7 +9,8 @@ const routerSlice = createSlice({
                 key: "1",
                 closeIcon: false,
                 path: "/index",
-                menuKey: ["1"]
+                menuKeypath: ["1"],
+                menuKey:"1"
             },
         ],
         activeKey: "1",
@@ -26,7 +26,7 @@ const routerSlice = createSlice({
             const index = state.tabList.findIndex(el => el.key === action.payload)
             if (index !== 0 && index === state.tabList.length - 1 && state.tabList[index].key === state.activeKey) {
                 state.activeKey = state.tabList[index - 1].key
-                state.activeMenu = state.tabList[index - 1].menuKey
+                state.activeMenu = state.tabList[index - 1].menuKeypath
             }
             state.tabList.splice(index, 1)
         },
@@ -38,7 +38,7 @@ const routerSlice = createSlice({
                     key: "1",
                     closeIcon: false,
                     path: "/index",
-                    menuKey: ["1"]
+                    menuKeypath: ["1"]
                 },
             ]
             state.activeKey = "1"

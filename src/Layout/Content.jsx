@@ -1,11 +1,12 @@
-import React, { useMemo, useState } from "react";
+import menu from "../menu/menu";
+import React, { useMemo } from "react";
 import Router from "../router/index";
 import { useSelector, useDispatch } from "react-redux";
 import {
   changeActiveKey,
   changeactiveMenu,
   closeMenu,
-  closeAllMenu
+  closeAllMenu,
 } from "@/redux/routerSlice.js";
 import { useNavigate } from "react-router-dom";
 import {
@@ -17,7 +18,8 @@ import { Layout, theme, Button, Tabs, Breadcrumb } from "antd";
 import "./Content.less";
 const { Content } = Layout;
 
-export default function ContentCom() {
+export default function ContentCom(props) {
+  const { changeBreadData } = props;
   const { activeKey, tabList } = useSelector((state) => state.routerSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,15 +31,63 @@ export default function ContentCom() {
   const clickTab = (key, e) => {
     dispatch(changeActiveKey(key));
     const obj = tabList.find((el) => el.key == key);
-    dispatch(changeactiveMenu(obj.menuKey));
+    dispatch(changeactiveMenu(obj.menuKeypath));
+    
+    //关联breadData
+    let obj2 = null;
+    let arr = [];
+    if (obj.menuKeypath.length === 1) {
+      obj2 = menu.find((el) => el.key === obj.menuKey);
+      //面包屑数据
+      arr.push({
+        title: (
+          <div>
+            {obj2.icon}
+            <span style={{ marginLeft: "5px" }}>{obj2.label}</span>
+          </div>
+        ),
+      });
+    } else {
+      console.log(obj.menuKeypath);
+      [...obj.menuKeypath].forEach((el) => {
+        if (obj2) {
+          obj2 = getObj(el, obj2);
+        } else {
+          console.log(el,menu);
+          obj2 = menu.find((item) => item.key === el);
+        }
+        arr.push({
+          title: (
+            <div>
+              {obj2.icon}
+              <span style={{ marginLeft: "5px" }}>{obj2.label}</span>
+            </div>
+          ),
+        });
+      });
+    }
+    changeBreadData(arr);
+
     navigate(obj.path);
   };
+  
+  //剥层方法
+  const getObj = (el, obj) => {
+    const { children } = obj;
+    if (children && children.length > 0) {
+      return children.find((item) => item.key === el);
+    } else {
+      return obj;
+    }
+  };
+
   const onEdit = (targetKey, action) => {
     console.log(action, targetKey);
     if (action === "remove") {
       remove(targetKey);
     }
   };
+
   const remove = (targetKey) => {
     const index = tabList.findIndex((el) => el.key === targetKey);
     if (
@@ -53,26 +103,31 @@ export default function ContentCom() {
     }
     dispatch(closeMenu(targetKey));
   };
+
   const prevNav = () => {
     const index = tabList.findIndex((el) => el.key === activeKey);
     let key = "";
     key = tabList[index - 1].key;
     clickTab(key);
   };
+
   const nextNav = () => {
     const index = tabList.findIndex((el) => el.key === activeKey);
     let key = "";
     key = tabList[index + 1].key;
     clickTab(key);
   };
+
   const closeAll = () => {
-    dispatch(closeAllMenu())
-    navigate('/index')
+    dispatch(closeAllMenu());
+    navigate("/index");
   };
-  const islast = useMemo(()=>{
-    const index = tabList.findIndex(el=>el.key===activeKey)
-    return index === tabList.length-1
-  },[activeKey])
+
+  const islast = useMemo(() => {
+    const index = tabList.findIndex((el) => el.key === activeKey);
+    return index === tabList.length - 1;
+  }, [activeKey]);
+
   return (
     <div>
       <div style={{ marginTop: "8px" }}>
@@ -113,23 +168,7 @@ export default function ContentCom() {
         />
       </div>
       <div style={{ marginBottom: "8px" }}>
-        <Breadcrumb
-          separator=">"
-          items={[
-            {
-              title: "Home",
-            },
-            {
-              title: <a href="">Application Center</a>,
-            },
-            {
-              title: <a href="">Application List</a>,
-            },
-            {
-              title: "An Application",
-            },
-          ]}
-        />
+        <Breadcrumb separator=">" items={props.breadData} />
       </div>
       <div
         style={{

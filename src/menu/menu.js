@@ -6,7 +6,7 @@ const menu = [
         key: "1",
         icon: <FundProjectionScreenOutlined />,
         label: "工作台",
-        path: '/index'
+        path: '/index',
     },
     {
         key: uuid.v4(),

@@ -7,6 +7,7 @@ import { routes } from "./router/router";
 import "@/style/index.less";
 import Layout from "./Layout/Layout";
 import Router from "./router/index";
+import "./App.less"
 function App() {
   const element = useRoutes(routes);
   const {
