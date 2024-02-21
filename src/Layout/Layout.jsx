@@ -14,7 +14,6 @@ import { UserOutlined } from "@ant-design/icons";
 
 export default function LayoutCom() {
   const { tabList, activeMenu } = useSelector((state) => state.routerSlice);
-  console.log(tabList);
   const dispatch = useDispatch();
   const [breadData, setBreadData] = useState([
     {
@@ -24,14 +23,13 @@ export default function LayoutCom() {
           <span>工作台</span>
         </div>
       ),
-      href: "/index",
     },
   ]);
   //修改面包屑数据
   const changeBreadData = (val) => {
     setBreadData(val);
   };
-  //剥层方法
+  //剥层tab方法
   const getObj = (key, obj) => {
     if (obj.key === key) {
       return obj;
@@ -41,14 +39,55 @@ export default function LayoutCom() {
       }
     }
   };
+  //剥层bread方法
+  const getBreadObj = (el, obj) => {
+    const { children } = obj;
+    if (children && children.length > 0) {
+      return children.find((item) => item.key === el);
+    } else {
+      return obj;
+    }
+  };
   //首次加载时查询tab缓存
   useMemo(() => {
     const tabobj = JSON.parse(sessionStorage.getItem("tabObj"));
-    console.log(tabobj, menu);
     if (tabobj.key != "1") {
       dispatch(changeActiveKey(tabobj.key));
       dispatch(changeactiveMenu(tabobj.menuKeypath));
       dispatch(openMenu(tabobj));
+      //关联面包屑
+      const obj = menu.find((el) => el.key === tabobj.menuKey);
+      if (obj) {
+        setBreadData([
+          {
+            title: (
+              <div>
+                {obj.icon}
+                <span style={{ marginLeft: "5px" }}>{obj.label}</span>
+              </div>
+            ),
+          },
+        ]);
+      } else {
+        let menuObj = null;
+        let arr=[]
+        tabobj.menuKeypath.forEach(el=>{
+          if (menuObj) {
+            menuObj = getBreadObj(el, menuObj);
+          } else {
+            menuObj = menu.find((item) => item.key === el);
+          }
+          arr.push({
+            title: (
+              <div>
+                {menuObj.icon}
+                <span style={{ marginLeft: "5px" }}>{menuObj.label}</span>
+              </div>
+            ),
+          });
+          setBreadData(arr)
+        })
+      }
     }
   }, []);
 

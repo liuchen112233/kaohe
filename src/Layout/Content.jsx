@@ -125,7 +125,6 @@ export default function ContentCom(props) {
   }, [activeKey]);
 
   useEffect(() => {
-    console.log(activeKey);
     const obj = tabList.find((el) => el.key === activeKey);
     sessionStorage.setItem("tabObj", JSON.stringify(obj));
     sessionStorage.setItem("menu",JSON.stringify(menu))
