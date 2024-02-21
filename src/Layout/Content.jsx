@@ -65,7 +65,6 @@ export default function ContentCom(props) {
       });
     }
     changeBreadData(arr);
-
     navigate(obj.path);
   };
 
@@ -117,6 +116,21 @@ export default function ContentCom(props) {
   const closeAll = () => {
     dispatch(closeAllMenu());
     navigate("/index");
+    console.log(tabList);
+    //修改breadData
+    let arr=[]
+    const obj = menu.find(el=>el.key=='1')
+    if(obj){
+      arr.push({
+        title: (
+          <div>
+            {obj.icon}
+            <span style={{ marginLeft: "5px" }}>{obj.label}</span>
+          </div>
+        ),
+      });
+      changeBreadData(arr);
+    }
   };
 
   const islast = useMemo(() => {

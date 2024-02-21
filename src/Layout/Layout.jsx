@@ -51,43 +51,45 @@ export default function LayoutCom() {
   //首次加载时查询tab缓存
   useMemo(() => {
     const tabobj = JSON.parse(sessionStorage.getItem("tabObj"));
+    dispatch(changeActiveKey(tabobj.key));
+    dispatch(changeactiveMenu(tabobj.menuKeypath));
     if (tabobj.key != "1") {
-      dispatch(changeActiveKey(tabobj.key));
-      dispatch(changeactiveMenu(tabobj.menuKeypath));
+      //控制台
       dispatch(openMenu(tabobj));
-      //关联面包屑
-      const obj = menu.find((el) => el.key === tabobj.menuKey);
-      if (obj) {
-        setBreadData([
-          {
-            title: (
-              <div>
-                {obj.icon}
-                <span style={{ marginLeft: "5px" }}>{obj.label}</span>
-              </div>
-            ),
-          },
-        ]);
-      } else {
-        let menuObj = null;
-        let arr=[]
-        tabobj.menuKeypath.forEach(el=>{
-          if (menuObj) {
-            menuObj = getBreadObj(el, menuObj);
-          } else {
-            menuObj = menu.find((item) => item.key === el);
-          }
-          arr.push({
-            title: (
-              <div>
-                {menuObj.icon}
-                <span style={{ marginLeft: "5px" }}>{menuObj.label}</span>
-              </div>
-            ),
-          });
-          setBreadData(arr)
-        })
-      }
+    }
+    //关联面包屑
+    const obj = menu.find((el) => el.key === tabobj.menuKey);
+    if (obj) {
+      console.log(obj);
+      setBreadData([
+        {
+          title: (
+            <div>
+              {obj.icon}
+              <span style={{ marginLeft: "5px" }}>{obj.label}</span>
+            </div>
+          ),
+        },
+      ]);
+    } else {
+      let menuObj = null;
+      let arr = [];
+      tabobj.menuKeypath.forEach((el) => {
+        if (menuObj) {
+          menuObj = getBreadObj(el, menuObj);
+        } else {
+          menuObj = menu.find((item) => item.key === el);
+        }
+        arr.push({
+          title: (
+            <div>
+              {menuObj.icon}
+              <span style={{ marginLeft: "5px" }}>{menuObj.label}</span>
+            </div>
+          ),
+        });
+        setBreadData(arr);
+      });
     }
   }, []);
 
