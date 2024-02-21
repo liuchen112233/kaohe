@@ -10,7 +10,7 @@ const routerSlice = createSlice({
                 closeIcon: false,
                 path: "/index",
                 menuKeypath: ["1"],
-                menuKey:"1"
+                menuKey: "1"
             },
         ],
         activeKey: "1",

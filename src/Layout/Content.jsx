@@ -1,5 +1,5 @@
 import menu from "../menu/menu";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import Router from "../router/index";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -32,8 +32,8 @@ export default function ContentCom(props) {
     dispatch(changeActiveKey(key));
     const obj = tabList.find((el) => el.key == key);
     dispatch(changeactiveMenu(obj.menuKeypath));
-    
-    //关联breadData
+
+    //关联tabData
     let obj2 = null;
     let arr = [];
     if (obj.menuKeypath.length === 1) {
@@ -80,7 +80,6 @@ export default function ContentCom(props) {
   };
 
   const onEdit = (targetKey, action) => {
-    console.log(action, targetKey);
     if (action === "remove") {
       remove(targetKey);
     }
@@ -93,7 +92,6 @@ export default function ContentCom(props) {
       index === tabList.length - 1 &&
       tabList[index].key === activeKey
     ) {
-      console.log(444);
       let path = tabList[index - 1].path;
       if (path) {
         navigate(path);
@@ -124,6 +122,13 @@ export default function ContentCom(props) {
   const islast = useMemo(() => {
     const index = tabList.findIndex((el) => el.key === activeKey);
     return index === tabList.length - 1;
+  }, [activeKey]);
+
+  useEffect(() => {
+    console.log(activeKey);
+    const obj = tabList.find((el) => el.key === activeKey);
+    sessionStorage.setItem("tabObj", JSON.stringify(obj));
+    sessionStorage.setItem("menu",JSON.stringify(menu))
   }, [activeKey]);
 
   return (

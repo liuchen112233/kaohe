@@ -1,6 +1,5 @@
 import React from "react";
 import { FundProjectionScreenOutlined, SketchOutlined, TeamOutlined } from '@ant-design/icons'
-const uuid = require('uuid')
 const menu = [
     {
         key: "1",
@@ -9,19 +8,19 @@ const menu = [
         path: '/index',
     },
     {
-        key: uuid.v4(),
+        key: "2",
         icon: <TeamOutlined />,
         label: "客户管理",
         children: [
             {
-                key: uuid.v4(),
+                key: "2-1",
                 label: "客户信息管理",
                 path: '/CustomerManage'
             },
         ]
     },
     {
-        key: uuid.v4(),
+        key: "3",
         icon: <SketchOutlined />,
         label: "会员中心",
         path: '/member'
