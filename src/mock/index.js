@@ -1,10 +1,9 @@
 import avatar from '@/assets/images/avatar.png'
 
 const Mock = require('mockjs');
+//登录
 Mock.mock("/mock/login", 'post', function (option) {
     const params = JSON.parse(option.body)
-    console.log(params);
-    console.log(avatar);
     sessionStorage.setItem('username', params.username)
     return {
         code: 200,
@@ -19,7 +18,7 @@ Mock.mock("/mock/login", 'post', function (option) {
         },
     };
 })
-
+//工作台查询
 Mock.mock("/mock/getWorkdesk", 'get', function (option) {
     return {
         code: 200,

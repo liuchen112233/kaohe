@@ -3,18 +3,17 @@ import React, { useMemo, useState } from "react";
 import Header from "./Header";
 import Sider from "./Sider";
 import Content from "./Content";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { closeAllMenu } from "@/redux/routerSlice.js";
 import {
   openMenu,
   changeActiveKey,
   changeactiveMenu,
 } from "@/redux/routerSlice.js";
-import { Layout, theme } from "antd";
+import { Layout } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 export default function LayoutCom() {
-  const { tabList, activeMenu } = useSelector((state) => state.routerSlice);
   const dispatch = useDispatch();
   const [breadData, setBreadData] = useState([
     {
@@ -29,16 +28,6 @@ export default function LayoutCom() {
   //修改面包屑数据
   const changeBreadData = (val) => {
     setBreadData(val);
-  };
-  //剥层tab方法
-  const getObj = (key, obj) => {
-    if (obj.key === key) {
-      return obj;
-    } else {
-      if (obj.children && obj.children.length > 0) {
-        getObj(key, obj.children);
-      }
-    }
   };
   //剥层bread方法
   const getBreadObj = (el, obj) => {
