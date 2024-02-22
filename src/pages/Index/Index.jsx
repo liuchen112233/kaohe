@@ -183,6 +183,11 @@ export default function Index() {
 
               global: false, // 缺省为 false
             },
+            emphasis: {
+              shadowBlur: 20,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
           },
           emphasis: {
             label: {
