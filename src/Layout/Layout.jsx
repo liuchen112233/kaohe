@@ -92,23 +92,25 @@ export default function LayoutCom() {
           setBreadData(arr);
         });
       }
-    }else{
-      const obj = menu[0] //工作台
+    } else {
+      const obj = menu[0]; //工作台
       dispatch(closeAllMenu());
-      setBreadData([{
-        title: (
-          <div>
-            {obj.icon}
-            <span style={{ marginLeft: "5px" }}>{obj.label}</span>
-          </div>
-        ),
-      }]);
+      setBreadData([
+        {
+          title: (
+            <div>
+              {obj.icon}
+              <span style={{ marginLeft: "5px" }}>{obj.label}</span>
+            </div>
+          ),
+        },
+      ]);
     }
   }, []);
 
   return (
-    <Layout>
-      <Header changeBreadData={changeBreadData}/>
+    <Layout style={{ minWidth: "1300px" }}>
+      <Header changeBreadData={changeBreadData} />
       <Layout>
         <Sider changeBreadData={changeBreadData} />
         <Layout
