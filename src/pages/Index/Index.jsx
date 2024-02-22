@@ -21,6 +21,7 @@ import {
 import { LabelLayout, UniversalTransition } from "echarts/features";
 // 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
 import { CanvasRenderer } from "echarts/renderers";
+import { getWorkdesk } from "@/api/api";
 echarts.use([
   TitleComponent,
   TooltipComponent,
@@ -60,7 +61,9 @@ export default function Index() {
   ];
   const handleChange = () => {};
   useEffect(() => {
-    
+    getWorkdesk().then((res) => {
+      console.log(res);
+    });
     let barChart = echarts.init(document.getElementById("barChart"));
     let funnelChart = echarts.init(document.getElementById("funnelChart"));
     barChart.setOption({
@@ -180,18 +183,17 @@ export default function Index() {
               y: 0,
               x2: 0,
               y2: 1,
-
               global: false, // 缺省为 false
             },
-            emphasis: {
-              shadowBlur: 20,
-              shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)'
-          }
           },
           emphasis: {
             label: {
               fontSize: 20,
+            },
+            itemStyle: {
+                shadowBlur: 20,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)",
             },
           },
           data: [
@@ -305,7 +307,7 @@ export default function Index() {
                       marginRight: "7px",
                     }}
                   />
-                  <span>活动到期</span>
+                  <span>预警提示</span>
                   <div className="tag">99+</div>
                 </div>
                 <div>
@@ -337,7 +339,7 @@ export default function Index() {
                       marginRight: "7px",
                     }}
                   />
-                  <span>活动到期</span>
+                  <span>待办事项</span>
                   <div className="tag">99+</div>
                 </div>
                 <div>
@@ -369,7 +371,7 @@ export default function Index() {
                       marginRight: "7px",
                     }}
                   />
-                  <span>活动到期</span>
+                  <span>系统通知</span>
                   <div className="tag">99+</div>
                 </div>
                 <div>

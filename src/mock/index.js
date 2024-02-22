@@ -19,3 +19,14 @@ Mock.mock("/mock/login", 'post', function (option) {
         },
     };
 })
+
+Mock.mock("/mock/getWorkdesk", 'get', function (option) {
+    return {
+        code: 200,
+        data: {
+            activity:{
+                
+            }
+        },
+    };
+})
