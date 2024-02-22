@@ -9,6 +9,7 @@
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
+  font-weight: bold;
   box-sizing: border-box;
   margin-bottom: 20px;
 }
@@ -31,6 +32,7 @@
 }
 .box .title div:last-child {
   color: #999999;
+  font-weight: normal;
 }
 .box .content {
   display: flex;
@@ -47,6 +49,7 @@
 }
 .box .content div:last-child {
   color: red;
+  white-space: nowrap;
 }
 .info {
   margin-top: 16px;

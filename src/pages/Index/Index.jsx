@@ -37,6 +37,14 @@ echarts.use([
 const { RangePicker } = DatePicker;
 export default function Index() {
   const [radioValue, setRadioValue] = useState("1");
+  const [barData, setBarData] = useState([]);
+  const [funnelData, setFunnelData] = useState([]);
+  let [activityEnd, setActivityEnd] = useState({});
+  let [activityRemid, setActivityRemid] = useState({});
+  let [activityTodo, setActivityTodo] = useState({});
+  let [systemInform, setSystemInform] = useState({});
+  let [dataManage, setDataManage] = useState({});
+
   const radioOnChange = ({ target: { value } }) => {
     console.log(value);
     setRadioValue(value);
@@ -62,75 +70,82 @@ export default function Index() {
   const handleChange = () => {};
   useEffect(() => {
     getWorkdesk().then((res) => {
-      console.log(res);
+      setActivityEnd(res.data.activity.activityEnd);
+      setActivityRemid(res.data.activity.activityRemid);
+      setActivityTodo(res.data.activity.activityTodo);
+      setSystemInform(res.data.activity.systemInform);
+      setDataManage(res.data.dataManage);
+      setBarData(res.data.barData);
+      setFunnelData(res.data.funnelData);
     });
-    let barChart = echarts.init(document.getElementById("barChart"));
-    let funnelChart = echarts.init(document.getElementById("funnelChart"));
-    barChart.setOption({
-      tooTip: {
-        show: true,
-      },
-      xAxis: {
-        axisLabel: {
-          interval: 0,
-          rotate: 40,
+  }, []);
+  useEffect(() => {
+    if (barData.length && funnelData.length > 0) {
+      let barChart = echarts.init(document.getElementById("barChart"));
+      let funnelChart = echarts.init(document.getElementById("funnelChart"));
+      barChart.setOption({
+        tooTip: {
+          show: true,
         },
-        type: "category",
-        data: [
-          "爱奇艺会员",
-          "马术权益",
-          "便捷挂号",
-          "游泳权益",
-          "腾讯视频",
-          "QQ音乐",
-          "网易云音乐",
-          "叮咚买菜",
-          "优酷视频",
-          "奈雪的茶",
-        ],
-      },
-      yAxis: {
-        type: "value",
-        name: "订单数量",
-      },
-
-      series: [
-        {
-          label: {
-            show: true,
-            position: "top",
+        xAxis: {
+          axisLabel: {
+            interval: 0,
+            rotate: 40,
           },
-          data: [120, 200, 150, 80, 70, 110, 130, 99, 88, 99],
-          type: "bar",
-          barWidth: 20,
-          itemStyle: {
-            color: function (params) {
-              let colorarrays = [
-                "#FABC36",
-                "#3377FF",
-                "#FABC36",
-                "#3377FF",
-                "#FABC36",
-                "#3377FF",
-                "#FABC36",
-                "#3377FF",
-                "#FABC36",
-                "#3377FF",
-              ];
-              return colorarrays[params.dataIndex];
+          type: "category",
+          data: [
+            "爱奇艺会员",
+            "马术权益",
+            "便捷挂号",
+            "游泳权益",
+            "腾讯视频",
+            "QQ音乐",
+            "网易云音乐",
+            "叮咚买菜",
+            "优酷视频",
+            "奈雪的茶",
+          ],
+        },
+        yAxis: {
+          type: "value",
+          name: "订单数量",
+        },
+
+        series: [
+          {
+            label: {
+              show: true,
+              position: "top",
+            },
+            data: barData,
+            type: "bar",
+            barWidth: 20,
+            itemStyle: {
+              color: function (params) {
+                let colorarrays = [
+                  "#FABC36",
+                  "#3377FF",
+                  "#FABC36",
+                  "#3377FF",
+                  "#FABC36",
+                  "#3377FF",
+                  "#FABC36",
+                  "#3377FF",
+                  "#FABC36",
+                  "#3377FF",
+                ];
+                return colorarrays[params.dataIndex];
+              },
             },
           },
-        },
-      ],
-    });
-    funnelChart.setOption({
-      tooltip: {
-        trigger: "item",
-        // formatter: "{a} <br/>{b} : {c}%",
-        formatter: (params, ticket, callback) => {
-          console.log(params);
-          const { data } = params;
-          return `
+        ],
+      });
+      funnelChart.setOption({
+        tooltip: {
+          trigger: "item",
+          formatter: (params, ticket, callback) => {
+            const { data } = params;
+            return `
           <div style="font-size:14px">
             <p>
             ${params.name}会员总人数：<span style="color:#1D70F5">${data.memberAll}</span>
@@ -146,117 +161,62 @@ export default function Index() {
             </p>
           </div>
           `;
+          },
         },
-      },
-      series: [
-        {
-          name: "Funnel",
-          type: "funnel",
-          left: "10%",
-          top: 60,
-          bottom: 60,
-          width: "80%",
-          min: 0,
-          max: 100,
-          minSize: "0%",
-          maxSize: "100%",
-          sort: "descending",
-          sort: "ascending",
-          gap: 2,
-          label: {
-            show: true,
-            position: "inside",
-          },
-          labelLine: {
-            length: 10,
-            lineStyle: {
-              width: 1,
-              type: "solid",
-            },
-          },
-          itemStyle: {
-            borderColor: "#fff",
-            borderWidth: 1,
-            color: {
-              type: "linear",
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              global: false, // 缺省为 false
-            },
-          },
-          emphasis: {
+        series: [
+          {
+            name: "Funnel",
+            type: "funnel",
+            left: "10%",
+            top: 60,
+            bottom: 60,
+            width: "80%",
+            min: 0,
+            max: 100,
+            minSize: "0%",
+            maxSize: "100%",
+            sort: "descending",
+            sort: "ascending",
+            gap: 2,
             label: {
-              fontSize: 20,
+              show: true,
+              position: "inside",
+            },
+            labelLine: {
+              length: 10,
+              lineStyle: {
+                width: 1,
+                type: "solid",
+              },
             },
             itemStyle: {
+              borderColor: "#fff",
+              borderWidth: 1,
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                global: false, // 缺省为 false
+              },
+            },
+            emphasis: {
+              label: {
+                fontSize: 20,
+              },
+              itemStyle: {
                 shadowBlur: 20,
                 shadowOffsetX: 0,
                 shadowColor: "rgba(0, 0, 0, 0.5)",
+              },
             },
+            data: funnelData,
           },
-          data: [
-            {
-              value: 60,
-              name: "V3",
-              memberAll: "100",
-              profitMember: "12",
-              hasMember: "111",
-              usedMember: "112",
-              itemStyle: {
-                color: "#6DC0FC",
-              },
-            },
-            {
-              value: 40,
-              name: "V4",
-              memberAll: "100",
-              profitMember: "12",
-              hasMember: "111",
-              usedMember: "112",
-              itemStyle: {
-                color: "#0594FA",
-              },
-            },
-            {
-              value: 20,
-              name: "V5",
-              memberAll: "100",
-              profitMember: "12",
-              hasMember: "111",
-              usedMember: "112",
-              itemStyle: {
-                color: "#0052D9",
-              },
-            },
-            {
-              value: 80,
-              name: "V2",
-              memberAll: "100",
-              profitMember: "12",
-              hasMember: "111",
-              usedMember: "112",
-              itemStyle: {
-                color: "#B3E0F9",
-              },
-            },
-            {
-              value: 100,
-              name: "V1",
-              memberAll: "100",
-              profitMember: "12",
-              hasMember: "111",
-              usedMember: "112",
-              itemStyle: {
-                color: "#73CCFF",
-              },
-            },
-          ],
-        },
-      ],
-    });
-  }, []);
+        ],
+      });
+    }
+  }, [barData, funnelData]);
   return (
     <div>
       <div>
@@ -284,12 +244,12 @@ export default function Index() {
                 </div>
               </div>
               <div className="content">
-                <div>周年庆活动标题...</div>
-                <div>2023-10-12</div>
+                <div>{activityEnd.title1}</div>
+                <div>{activityEnd.time1}</div>
               </div>
               <div className="content">
-                <div>积分抽奖活动标…</div>
-                <div>2023-10-12</div>
+                <div>{activityEnd.title2}</div>
+                <div>{activityEnd.time2}</div>
               </div>
             </div>
           </Col>
@@ -316,12 +276,12 @@ export default function Index() {
                 </div>
               </div>
               <div className="content">
-                <div>周年庆活动标题...</div>
-                <div>2023-10-12</div>
+                <div>{activityRemid.title1}</div>
+                <div>{activityRemid.time1}</div>
               </div>
               <div className="content">
-                <div>积分抽奖活动标…</div>
-                <div>2023-10-12</div>
+                <div>{activityRemid.title2}</div>
+                <div>{activityRemid.time2}</div>
               </div>
             </div>
           </Col>
@@ -348,12 +308,12 @@ export default function Index() {
                 </div>
               </div>
               <div className="content">
-                <div>周年庆活动标题...</div>
-                <div>2023-10-12</div>
+                <div>{activityTodo.title1}</div>
+                <div>{activityTodo.time1}</div>
               </div>
               <div className="content">
-                <div>积分抽奖活动标…</div>
-                <div>2023-10-12</div>
+                <div>{activityTodo.title2}</div>
+                <div>{activityTodo.time2}</div>
               </div>
             </div>
           </Col>
@@ -381,12 +341,12 @@ export default function Index() {
               </div>
               <div className="content">
                 <div style={{ color: "#333333", width: "100%" }}>
-                  权益公告名称 6月25日18:00:00
+                  {systemInform.title1}
                 </div>
               </div>
               <div className="content">
                 <div style={{ color: "#333333", width: "100%" }}>
-                  9月20日权益公告XXX 6月25日18
+                  {systemInform.title2}
                 </div>
               </div>
             </div>
@@ -406,23 +366,32 @@ export default function Index() {
         </div>
         <div className="infoData">
           <div>
-            <div>1320</div>
+            <div>{dataManage.validAll}</div>
             <div>有效权益总量</div>
           </div>
           <div>
-            <div>1320</div>
+            <div>{dataManage.onlineAll}</div>
             <div>在线活动总量</div>
           </div>
           <div>
-            <div>1320</div>
+            <div>{dataManage.profitAll}</div>
             <div>权益订单总量</div>
           </div>
           <div>
-            <div>1320</div>
+            <div>
+              <span>
+                {dataManage.productAll}<span style={{ fontSize: "20px" }}>w</span>
+              </span>
+            </div>
             <div>商品订单总量</div>
           </div>
           <div>
-            <div>1320</div>
+            <div>
+              <span>
+                {dataManage.usedA}/<span>{dataManage.spread}</span>
+                <span style={{ fontSize: "20px" }}>w</span>
+              </span>
+            </div>
             <div>类型A使用量/发放量</div>
           </div>
         </div>

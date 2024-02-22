@@ -116,7 +116,7 @@ export default function SiderCom(props) {
         <div
           style={{
             display: "flex",
-            position: "fixed",
+            position: "absolute",
             bottom: "0",
             width: controlWidth,
             justifyContent: !showMenu ? "flex-end" : "center",
