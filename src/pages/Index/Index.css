@@ -125,6 +125,7 @@
 }
 .footer .left .radioTab {
   margin-bottom: 16px;
+  text-align: left;
 }
 .footer .left .filter {
   display: flex;
