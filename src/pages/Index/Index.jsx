@@ -427,7 +427,7 @@ export default function Index() {
       </div>
       <div className="footer">
         <Row gutter={16}>
-          <Col span={14}>
+          <Col span={16}>
             <div className="left">
               <div className="left-title">
                 <span></span>
@@ -455,7 +455,7 @@ export default function Index() {
                   <RangePicker placeholder={["开始日期", "结束日期"]} />
                 </div>
               </div>
-              <div style={{ height: "500px" }}>
+              <div style={{ height: "400px" }}>
                 <div
                   id="barChart"
                   style={{ width: "100%", height: "100%" }}
@@ -463,7 +463,7 @@ export default function Index() {
               </div>
             </div>
           </Col>
-          <Col span={10}>
+          <Col span={8}>
             <div className="right">
               <div className="right-title">
                 <div>
@@ -475,7 +475,7 @@ export default function Index() {
                   <RightOutlined />
                 </div>
               </div>
-              <div style={{ height: "500px" }}>
+              <div style={{ height: "400px" }}>
                 <div
                   id="funnelChart"
                   style={{ width: "100%", height: "100%" }}

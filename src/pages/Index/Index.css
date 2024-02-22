@@ -41,6 +41,9 @@
 }
 .box .content div:first-child {
   width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .box .content div:last-child {
   color: red;
