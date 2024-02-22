@@ -95,3 +95,86 @@
 .info .infoData div:first-child div:first-child {
   color: #F37A1D;
 }
+.footer {
+  margin-top: 16px;
+}
+.footer .left {
+  background-color: #fff;
+  padding: 16px;
+}
+.footer .left .left-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.footer .left .left-title span {
+  display: inline-block;
+  font-size: 16px;
+}
+.footer .left .left-title span:first-child {
+  width: 4px;
+  height: 16px;
+  background-color: #1D70F5;
+  margin-right: 12px;
+}
+.footer .left .radioTab {
+  margin-bottom: 16px;
+}
+.footer .left .filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer .right {
+  padding: 16px;
+  background-color: #fff;
+}
+.footer .right .right-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+.footer .right .right-title div:first-child {
+  display: flex;
+  align-items: center;
+}
+.footer .right .right-title div:first-child span:first-child {
+  display: inline-block;
+  width: 4px;
+  height: 16px;
+  background-color: #1D70F5;
+  margin-right: 12px;
+}
+.footer .right .right-title div:last-child {
+  font-size: 14px;
+  color: #999;
+}
+.footer .right .right-footer {
+  margin-top: 22px;
+  padding: 0 52px;
+  display: flex;
+  justify-content: space-between;
+}
+.footer .right .right-footer div div {
+  margin-bottom: 17px;
+  display: flex;
+  align-items: center;
+}
+.footer .right .right-footer div div span {
+  color: #555555;
+  line-height: 20px;
+}
+.footer .right .right-footer div div span:nth-child(2) {
+  margin-right: 20px;
+}
+.footer .right .right-footer div div span:first-child {
+  display: inline-block;
+  background-color: #518BFF;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+.footer .right .right-footer div div span:last-child {
+  color: #F37A1D;
+}

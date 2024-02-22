@@ -15,7 +15,12 @@ const menu = [
             {
                 key: "2-1",
                 label: "客户信息管理",
-                path: '/CustomerManage',
+                children: [{
+                    key: "2-1-1",
+                    label: "客户视图",
+                    path: '/CustomerManage',
+                }
+                ]
             },
         ]
     },
