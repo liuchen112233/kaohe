@@ -122,3 +122,85 @@ Mock.mock("/mock/getWorkdesk", 'get', function (option) {
         },
     };
 })
+//查询工作台echarts数据
+Mock.mock("/mock/getWorkdeskEchartsData", 'get', function (option) {
+    const randomBar = () => {
+        let arr = []
+        for (let i = 0; i < 10; i++) {
+            arr.push(parseInt(Math.random() * 1000))
+        }
+        return arr
+    }
+    const randomNumber = () => {
+        return parseInt(Math.random() * 1000)
+    }
+    return {
+        code: 200,
+        data: {
+            barData: randomBar(),
+            funnelData: [
+                {
+                    value: 60,
+                    name: "V3",
+                    memberAll: randomNumber(),
+                    profitMember: randomNumber(),
+                    hasMember: randomNumber(),
+                    usedMember: randomNumber(),
+                    itemStyle: {
+                        color: "#6DC0FC",
+                    },
+                },
+                {
+                    value: 40,
+                    name: "V4",
+                    memberAll: randomNumber(),
+                    profitMember: randomNumber(),
+                    hasMember: randomNumber(),
+                    usedMember: randomNumber(),
+                    itemStyle: {
+                        color: "#0594FA",
+                    },
+                },
+                {
+                    value: 20,
+                    name: "V5",
+                    memberAll: randomNumber(),
+                    profitMember: randomNumber(),
+                    hasMember: randomNumber(),
+                    usedMember: randomNumber(),
+                    itemStyle: {
+                        color: "#0052D9",
+                    },
+                },
+                {
+                    value: 80,
+                    name: "V2",
+                    memberAll: randomNumber(),
+                    profitMember: randomNumber(),
+                    hasMember: randomNumber(),
+                    usedMember: randomNumber(),
+                    itemStyle: {
+                        color: "#B3E0F9",
+                    },
+                },
+                {
+                    value: 100,
+                    name: "V1",
+                    memberAll: randomNumber(),
+                    profitMember: randomNumber(),
+                    hasMember: randomNumber(),
+                    usedMember: randomNumber(),
+                    itemStyle: {
+                        color: "#73CCFF",
+                    },
+                },
+            ],
+            memberData: {
+                memberAll: randomNumber(),
+                profitMember: randomNumber(),
+                hasMember: randomNumber(),
+                usedMember: randomNumber(),
+            }
+        },
+    };
+})

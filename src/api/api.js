@@ -5,3 +5,6 @@ import "@/mock/index.js"
 export const login = p => post('/login',p)
 //获取工作台页面数据
 export const getWorkdesk = () => get('/getWorkdesk')
+//获取工作台页面echarts数据
+export const getWorkdeskEchartsData = () => get('/getWorkdeskEchartsData')
+

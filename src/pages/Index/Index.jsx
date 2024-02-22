@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, Radio, Select, Button, DatePicker } from "antd";
+import { Col, Row, Radio, Select, Button, DatePicker, Spin } from "antd";
 import {
   BellOutlined,
   RightOutlined,
@@ -19,9 +19,9 @@ import {
 } from "echarts/components";
 // 标签自动布局、全局过渡动画等特性
 import { LabelLayout, UniversalTransition } from "echarts/features";
-// 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
+
 import { CanvasRenderer } from "echarts/renderers";
-import { getWorkdesk } from "@/api/api";
+import { getWorkdesk, getWorkdeskEchartsData } from "@/api/api";
 echarts.use([
   TitleComponent,
   TooltipComponent,
@@ -44,12 +44,12 @@ export default function Index() {
   let [activityTodo, setActivityTodo] = useState({});
   let [systemInform, setSystemInform] = useState({});
   let [dataManage, setDataManage] = useState({});
+  let [selectOptions, setSelectOptions] = useState([]);
+  let [selectValue, setSelectValue] = useState("");
+  let [memberData, setMemberData] = useState({});
+  let [loading, setLoading] = useState(false);
 
-  const radioOnChange = ({ target: { value } }) => {
-    console.log(value);
-    setRadioValue(value);
-  };
-  const selectOptions = [
+  const arr1 = [
     {
       label: "权益发放统计",
       value: "1",
@@ -67,17 +67,64 @@ export default function Index() {
       value: "4",
     },
   ];
-  const handleChange = () => {};
+  const arr2 = [
+    {
+      label: "积分使用统计",
+      value: "1",
+    },
+    {
+      label: "积分发放统计",
+      value: "2",
+    },
+    {
+      label: "积分活动发放统计",
+      value: "3",
+    },
+  ];
+  const radioOnChange = ({ target: { value } }) => {
+    setRadioValue(value);
+    setSelectValue("");
+    if (value == 1) {
+      setSelectOptions(arr1);
+    } else {
+      setSelectOptions(arr2);
+    }
+  };
+  const handleChange = (value) => {
+    setSelectValue(value);
+    getEchartsData();
+  };
+  const getEchartsData = () => {
+    setLoading(true);
+    getWorkdeskEchartsData()
+      .then((res) => {
+        setBarData(res.data.barData);
+        setFunnelData(res.data.funnelData);
+        setMemberData(res.data.memberData)
+      })
+      .catch((err) => {})
+      .finally(() => {
+        setLoading(false);
+      });
+  };
   useEffect(() => {
-    getWorkdesk().then((res) => {
-      setActivityEnd(res.data.activity.activityEnd);
-      setActivityRemid(res.data.activity.activityRemid);
-      setActivityTodo(res.data.activity.activityTodo);
-      setSystemInform(res.data.activity.systemInform);
-      setDataManage(res.data.dataManage);
-      setBarData(res.data.barData);
-      setFunnelData(res.data.funnelData);
-    });
+    setSelectOptions(arr1);
+    setLoading(true);
+    getWorkdesk()
+      .then((res) => {
+        setActivityEnd(res.data.activity.activityEnd);
+        setActivityRemid(res.data.activity.activityRemid);
+        setActivityTodo(res.data.activity.activityTodo);
+        setSystemInform(res.data.activity.systemInform);
+        setDataManage(res.data.dataManage);
+        setBarData(res.data.barData);
+        setFunnelData(res.data.funnelData);
+        setMemberData(res.data.memberData);
+      })
+      .catch((err) => {})
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
   useEffect(() => {
     if (barData.length && funnelData.length > 0) {
@@ -380,7 +427,8 @@ export default function Index() {
           <div>
             <div>
               <span>
-                {dataManage.productAll}<span style={{ fontSize: "20px" }}>w</span>
+                {dataManage.productAll}
+                <span style={{ fontSize: "20px" }}>w</span>
               </span>
             </div>
             <div>商品订单总量</div>
@@ -396,92 +444,95 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <div className="footer">
-        <Row gutter={16}>
-          <Col span={16}>
-            <div className="left">
-              <div className="left-title">
-                <span></span>
-                <span>TOP10数据统计</span>
-              </div>
-              <div className="radioTab">
-                <Radio.Group
-                  defaultValue="a"
-                  buttonStyle="solid"
-                  value={radioValue}
-                  onChange={radioOnChange}
-                >
-                  <Radio.Button value="1">权益数据统计</Radio.Button>
-                  <Radio.Button value="2">积分数据统计</Radio.Button>
-                </Radio.Group>
-              </div>
-              <div className="filter">
-                <Select
-                  style={{ width: 160 }}
-                  onChange={handleChange}
-                  options={selectOptions}
-                />
-                <div>
-                  <Button style={{ marginRight: "7px" }}>全部</Button>
-                  <RangePicker placeholder={["开始日期", "结束日期"]} />
-                </div>
-              </div>
-              <div style={{ height: "400px" }}>
-                <div
-                  id="barChart"
-                  style={{ width: "100%", height: "100%" }}
-                ></div>
-              </div>
-            </div>
-          </Col>
-          <Col span={8}>
-            <div className="right">
-              <div className="right-title">
-                <div>
+      <Spin spinning={loading}>
+        <div className="footer">
+          <Row gutter={16}>
+            <Col span={16}>
+              <div className="left">
+                <div className="left-title">
                   <span></span>
-                  <span>会员体系</span>
+                  <span>TOP10数据统计</span>
                 </div>
-                <div>
-                  <span>更多</span>
-                  <RightOutlined />
+                <div className="radioTab">
+                  <Radio.Group
+                    defaultValue="a"
+                    buttonStyle="solid"
+                    value={radioValue}
+                    onChange={radioOnChange}
+                  >
+                    <Radio.Button value="1">权益数据统计</Radio.Button>
+                    <Radio.Button value="2">积分数据统计</Radio.Button>
+                  </Radio.Group>
                 </div>
-              </div>
-              <div style={{ height: "400px" }}>
-                <div
-                  id="funnelChart"
-                  style={{ width: "100%", height: "100%" }}
-                ></div>
-              </div>
-              <div className="right-footer">
-                <div>
+                <div className="filter">
+                  <Select
+                    style={{ width: 160 }}
+                    onChange={handleChange}
+                    options={selectOptions}
+                    value={selectValue}
+                  />
                   <div>
-                    <span></span>
-                    <span>会员总人数</span>
-                    <span>102</span>
-                  </div>
-                  <div>
-                    <span></span>
-                    <span>已领取总数</span>
-                    <span>178</span>
+                    <Button onClick={getEchartsData} style={{ marginRight: "7px" }}>全部</Button>
+                    <RangePicker onChange={getEchartsData} placeholder={["开始日期", "结束日期"]} />
                   </div>
                 </div>
-                <div>
-                  <div>
-                    <span></span>
-                    <span>权益总数量</span>
-                    <span>102</span>
-                  </div>
-                  <div>
-                    <span></span>
-                    <span>已使用总数量</span>
-                    <span>178</span>
-                  </div>
+                <div style={{ height: "400px" }}>
+                  <div
+                    id="barChart"
+                    style={{ width: "100%", height: "100%" }}
+                  ></div>
                 </div>
               </div>
-            </div>
-          </Col>
-        </Row>
-      </div>
+            </Col>
+            <Col span={8}>
+              <div className="right">
+                <div className="right-title">
+                  <div>
+                    <span></span>
+                    <span>会员体系</span>
+                  </div>
+                  <div>
+                    <span>更多</span>
+                    <RightOutlined />
+                  </div>
+                </div>
+                <div style={{ height: "400px" }}>
+                  <div
+                    id="funnelChart"
+                    style={{ width: "100%", height: "100%" }}
+                  ></div>
+                </div>
+                <div className="right-footer">
+                  <div>
+                    <div>
+                      <span></span>
+                      <span>会员总人数</span>
+                      <span>{memberData.memberAll}</span>
+                    </div>
+                    <div>
+                      <span></span>
+                      <span>已领取总数</span>
+                      <span>{memberData.hasMember}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <span></span>
+                      <span>权益总数量</span>
+                      <span>{memberData.profitMember}</span>
+                    </div>
+                    <div>
+                      <span></span>
+                      <span>已使用总数量</span>
+                      <span>{memberData.usedMember}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </Spin>
     </div>
   );
 }
