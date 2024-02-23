@@ -101,6 +101,8 @@ export default function Index() {
         setBarData(res.data.barData);
         setFunnelData(res.data.funnelData);
         setMemberData(res.data.memberData)
+        echarts.dispose(document.getElementById('barChart'))
+        echarts.dispose(document.getElementById('funnelChart'))
       })
       .catch((err) => {})
       .finally(() => {
