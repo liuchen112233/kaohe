@@ -18,7 +18,7 @@ const menu = [
                 children: [{
                     key: "2-1-1",
                     label: "客户视图",
-                    path: '/CustomerManage',
+                    path: '/CustomerView',
                 }
                 ]
             },

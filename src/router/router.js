@@ -5,7 +5,7 @@ const Error = lazy(() => import("@/pages/Error/Error.jsx"))
 const Index = lazy(() => import("@/pages/Index/Index.jsx"))
 const Login = lazy(() => import("@/pages/Login/Login.jsx"))
 const Member = lazy(() => import("@/pages/Member/Member.jsx"))
-const CustomerManage = lazy(() => import("@/pages/CustomerManage/CustomerManage.jsx"))
+const CustomerView = lazy(() => import("@/pages/CustomerView/CustomerView.jsx"))
 
 export const routes = [
     {
@@ -21,8 +21,8 @@ export const routes = [
         element: <Index />
     },
     {
-        path: "/CustomerManage",
-        element: <CustomerManage />
+        path: "/CustomerView",
+        element: <CustomerView />
     },
     {
         path: "/member",

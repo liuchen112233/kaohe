@@ -1,0 +1,152 @@
+.container {
+    background-color: #fff;
+    padding: 16px;
+
+    .left {
+        .banner {
+            background-image: url("@/assets/images/banner.png");
+            background-size: 100% 100%;
+            border-radius: 8px;
+            display: flex;
+            padding: 16px;
+            color: #fff;
+            margin-bottom: 25px;
+
+            .avatar {
+                width: 75px;
+                margin-right: 20px;
+            }
+
+            .banner-info {
+                width: 100%;
+
+                .name {
+                    display: flex;
+                    align-items: center;
+
+                    .name2 {
+                        margin-right: 20px;
+                    }
+
+                    .tag {
+                        background-color: #f7dabe;
+                        border-radius: 8px;
+                        display: flex;
+                        align-items: center;
+                        height: 16px;
+                        padding: 0px 20px 0px 0;
+                        font-size: 10px;
+                        color: #dab696;
+
+                        span:first-child {
+                            background-color: #fff7e2;
+                            width: 16px;
+                            height: 16px;
+                            text-align: center;
+                            display: inline-block;
+                            border-radius: 50%;
+                            margin-right: 5px;
+                        }
+
+                        span {
+                            line-height: 16px;
+                        }
+                    }
+                }
+
+                .process {
+                    display: flex;
+                    font-size: 12px;
+                    align-items: center;
+                    width: 100%;
+                    margin-bottom: 10px;
+
+                    span {
+                        white-space: nowrap;
+                        margin-right: 10px;
+                    }
+                }
+
+                .banner-detail {
+                    display: flex;
+                    font-size: 12px;
+                    margin-bottom: 30px;
+
+                    div {
+                        width: 50%;
+
+                        div {
+                            line-height: 23px;
+                            width: 100%;
+                            display: flex;
+
+                            span:first-child {
+                                width: 100px;
+                                text-align: left;
+                            }
+
+                            span:last-child {
+                                width: 150px;
+                                text-align: left;
+                                white-space: nowrap;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .profitCenter {
+            .title {
+                display: flex;
+                align-items: center;
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 16px;
+
+                span:first-child {
+                    width: 4px;
+                    height: 16px;
+                    background-color: #1D70F5;
+                    margin-right: 8px;
+                }
+            }
+
+            .profitShow {
+                display: flex;
+                align-items: center;
+                margin-bottom: 43px;
+
+                .profitShow-left {
+                    // width: 50%;
+                    margin-right: 24px;
+
+                    .profitShow-title {
+                        color: #1D70F5;
+                        margin-bottom: 21px;
+                    }
+                }
+
+            }
+
+            .profitShow-box {
+                width: 100%;
+                display: flex;
+                border-right: 1px solid #ccc;
+
+                img {
+                    width: 48px;
+                    margin-right: 64px;
+                }
+            }
+        }
+    }
+}
+
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-slider-horizontal {
+    width: 200px;
+}
+
+:where(.css-dev-only-do-not-override-1rqnfsa).ant-slider-horizontal .ant-slider-rail {
+    background-color: #8f9eff;
+}

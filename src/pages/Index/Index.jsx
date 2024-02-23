@@ -10,29 +10,10 @@ import {
 import "./Index.less";
 import * as echarts from "echarts";
 import { BarChart, FunnelChart } from "echarts/charts";
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-  DatasetComponent,
-  TransformComponent,
-} from "echarts/components";
-// 标签自动布局、全局过渡动画等特性
-import { LabelLayout, UniversalTransition } from "echarts/features";
-
-import { CanvasRenderer } from "echarts/renderers";
 import { getWorkdesk, getWorkdeskEchartsData } from "@/api/api";
 echarts.use([
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-  DatasetComponent,
-  TransformComponent,
   BarChart,
   FunnelChart,
-  LabelLayout,
-  UniversalTransition,
-  CanvasRenderer,
 ]);
 const { RangePicker } = DatePicker;
 export default function Index() {
