@@ -14,11 +14,10 @@ function App() {
       match: { pathname },
     },
   } = element;
-
   return (
     <Provider store={store}>
       <div className="App">
-        {pathname === "/login" ? <Router></Router> : <Layout></Layout>}
+        {pathname === "/login" || pathname === "/error"? <Router></Router> : <Layout></Layout>}
       </div>
     </Provider>
   );

@@ -35,6 +35,10 @@ export const routes = [
     },
     {
         path: "*",
+        element:<Navigate to="/error"/>
+    },
+    {
+        path: "/error",
         element: <Error />
     },
 ]
