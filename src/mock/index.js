@@ -425,3 +425,53 @@ Mock.mock("/mock/companyProfitList", 'post', function (option) {
         },
     };
 })
+//删除功能
+Mock.mock("/mock/deleteProfitList", 'post', function (option) {
+    const params = JSON.parse(option.body)
+    const index = array.findIndex(el => el.key === params.key)
+    array.splice(index, 1)
+    return {
+        code: 200,
+        data: {
+            message: "删除成功"
+        },
+    };
+})
+//新增查询功能
+Mock.mock("/mock/companyAddnewQuery", 'post', function (option) {
+    const randomNumber = () => {
+        return parseInt(Math.random() * 1000)
+    }
+    let arr = []
+    for (let i = 0; i < 20; i++) {
+        arr.push({
+            customerId: randomNumber(),
+            customerName: "客户名称",
+            customerPhone: randomNumber(),
+            customerIdtype: "身份证",
+            customerIdcard: randomNumber(),
+            key:i+1
+        })
+    }
+    return {
+        code: 200,
+        data: {
+            list:arr,
+            total:arr.length
+        },
+    };
+})
+//新增功能
+Mock.mock("/mock/companyAddnew", 'post', function (option) {
+    const params = JSON.parse(option.body)
+    array = [...params.arr,...array]
+    array.forEach((el, index) => {
+        el.key = index + 1
+    })
+    return {
+        code: 200,
+        data: {
+            message: "新增成功"
+        },
+    };
+})
