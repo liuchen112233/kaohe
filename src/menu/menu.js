@@ -22,6 +22,16 @@ const menu = [
                 }
                 ]
             },
+            {
+                key: "2-2",
+                label: "对公客户管理",
+                children: [{
+                    key: "2-2-1",
+                    label: "对公客户视图",
+                    path: '/CompanyView',
+                }
+                ]
+            },
         ]
     },
     {
