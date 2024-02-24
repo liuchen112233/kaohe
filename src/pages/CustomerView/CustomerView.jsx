@@ -3,6 +3,7 @@ import { Row, Col, Image, Slider, Radio, Table, Tabs } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import * as echarts from "echarts";
 import { LineChart } from "echarts/charts";
+import { getProfitInfo, getProfitList } from "@/api/api";
 import List from "./List";
 import "./CustomerView.less";
 import touxiang from "@/assets/images/touxiang.png";
@@ -14,27 +15,38 @@ const status = [
   { label: "待使用", value: "1" },
   { label: "已使用", value: "2" },
 ];
+const profitType = [
+  { label: "票券类", value: "1" },
+  { label: "家乐福10元抵扣券", value: "2" },
+];
 echarts.use([LineChart]);
 const columns1 = [
   {
     title: "使用排名",
-    dataIndex: "profitName",
+    dataIndex: "usedRank",
   },
   {
     title: "权益类型",
-    dataIndex: "profitCost",
+    dataIndex: "profitType",
+    render: (text) => {
+      return profitType.map((el) => {
+        if (el.value == text) {
+          return <a>{el.label}</a>;
+        }
+      });
+    },
   },
   {
     title: "包含权益数量",
-    dataIndex: "profitRelate",
+    dataIndex: "containCount",
   },
   {
     title: "使用/领取",
-    dataIndex: "profitUsetime",
+    dataIndex: "useAndGet",
   },
   {
     title: "使用率",
-    dataIndex: "profitAddr",
+    dataIndex: "rate",
   },
 ];
 const columns2 = [
@@ -42,7 +54,7 @@ const columns2 = [
     title: "权益名称",
     dataIndex: "profitName",
     render: () => {
-      return <a href="javascript:;">家乐福10元抵扣券</a>;
+      return <a>家乐福10元抵扣券</a>;
     },
   },
   {
@@ -83,28 +95,32 @@ const columns2 = [
 ];
 
 export default function Index() {
-  const [list, setList] = useState([{}, {}, {}, {}, {}, {},{}, {}, {},{}, {}, {},{}, {}, {}]);
+  const [custInfo, setCustInfo] = useState({});
+  const [total, setTotal] = useState({});
+  const [list, setList] = useState([]);
+  const [hasList, setHasList] = useState([]);
+  const [usedList, setUsedList] = useState([]);
+  const [expiredList, setExpiredList] = useState([]);
   const [radioValue, setRadioValue] = useState("1");
+  const [lineData, setLineData] = useState([150, 230, 224, 218, 135, 147, 260, 33, 444, 22, 223,666]);
   const items = [
     {
       key: "1",
       label: "已领取权益",
-      children: <List list={list} />,
+      children: <List list={hasList} />,
     },
     {
       key: "2",
       label: "已使用权益",
-      children: <List list={list} />,
+      children: <List list={usedList} />,
     },
     {
       key: "3",
       label: "已失效权益",
-      children: <List list={list} />,
+      children: <List list={expiredList} />,
     },
   ];
-  const radioChange = ({ target: { value } }) => {
-    setRadioValue(value);
-  };
+
   const columnsMemo = useMemo(() => {
     if (radioValue == "4") {
       return columns1;
@@ -113,20 +129,55 @@ export default function Index() {
     }
   }, [radioValue]);
 
+  const radioChange = ({ target: { value } }) => {
+    getProfitList({ value: value }).then((res) => {
+      setRadioValue(value);
+      if (value == 5) {
+        setLineData(res.data.list)
+      } else {
+        setList(res.data.list);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getProfitInfo().then((res) => {
+      const { data } = res;
+      setCustInfo(data.custInfo);
+      setList(data.list);
+      setTotal(data.total);
+      setHasList(data.hasList);
+      setUsedList(data.usedList);
+      setExpiredList(data.expiredList);
+    });
+  }, []);
   useEffect(() => {
     if (document.getElementById("lineChart")) {
       let lineChart = echarts.init(document.getElementById("lineChart"));
       lineChart.setOption({
         xAxis: {
           type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          data: [
+            "1月",
+            "2月",
+            "3月",
+            "4月",
+            "5月",
+            "6月",
+            "7月",
+            "8月",
+            "9月",
+            "10月",
+            "11月",
+            "12月",
+          ],
         },
         yAxis: {
           type: "value",
         },
         series: [
           {
-            data: [150, 230, 224, 218, 135, 147, 260],
+            data: lineData,
             type: "line",
           },
         ],
@@ -150,55 +201,55 @@ export default function Index() {
                 </div>
                 <div className="banner-info">
                   <div className="name">
-                    <span className="name2">王雄</span>
+                    <span className="name2">{custInfo.custName}</span>
                     <span className="tag">
                       <span>**</span>
-                      <span>侯爵</span>
+                      <span>{custInfo.status}</span>
                     </span>
                   </div>
                   <div className="process">
                     <span>侯爵</span>
-                    <span>0</span>
+                    <span>{custInfo.min}</span>
                     <span>
-                      <Slider max={10000} min={0} />
+                      <Slider max={custInfo.max} min={custInfo.min} />
                     </span>
-                    <span>10000</span>
+                    <span>{custInfo.max}</span>
                   </div>
                   <div className="banner-detail">
                     <div>
                       <div>
                         <span>客户号</span>
-                        <span>6000001</span>
+                        <span>{custInfo.custNo}</span>
                       </div>
                       <div>
                         <span>证件类型</span>
-                        <span>居民身份证</span>
+                        <span>{custInfo.custIdType}</span>
                       </div>
                       <div>
                         <span>证件号</span>
-                        <span>6000001</span>
+                        <span>{custInfo.custIdCard}</span>
                       </div>
                       <div>
                         <span>手机号</span>
-                        <span>6000001</span>
+                        <span>{custInfo.custPhone}</span>
                       </div>
                     </div>
                     <div>
                       <div>
                         <span>所属机构</span>
-                        <span>兴业银行郑州紫荆山路支行</span>
+                        <span>{custInfo.branch}</span>
                       </div>
                       <div>
                         <span>登录渠道</span>
-                        <span>6000001</span>
+                        <span>{custInfo.loginWay}</span>
                       </div>
                       <div>
                         <span>登录ip</span>
-                        <span>192.168.1.137</span>
+                        <span>{custInfo.loginIp}</span>
                       </div>
                       <div>
                         <span>上次登录时间</span>
-                        <span>2020-12-30 15:41:21</span>
+                        <span>{custInfo.lastLogin}</span>
                       </div>
                     </div>
                   </div>
@@ -286,7 +337,7 @@ export default function Index() {
           </div>
         </Col>
         <Col span={8}>
-          <div style={{height:'900px',overflow:"hidden"}}>
+          <div style={{ height: "900px", overflow: "hidden" }}>
             <Tabs defaultActiveKey="1" items={items} />
           </div>
         </Col>

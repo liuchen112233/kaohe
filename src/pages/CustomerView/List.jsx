@@ -9,17 +9,17 @@ export default function List(props) {
     <div className="list-container">
       {list.map((el, index) => {
         return (
-          <div class="list-box" key={index}>
-            <div class="img">
+          <div className="list-box" key={index}>
+            <div className="img">
               <Image preview={false} src={logo} />
             </div>
             <div className="list-content">
               <div className="list-content-title">家乐福10元抵扣券</div>
-              <div className="list-content-time">2023-10-13 04:39:55</div>
+              <div className="list-content-time">{el.time}</div>
               <div className="list-comment">
                 <div className="list-rate">
                   <span>用户评价：</span>
-                  <Rate style={{fontSize:"16px"}} disabled value={3} />
+                  <Rate style={{fontSize:"16px"}} disabled value={el.rate} />
                 </div>
                 <div className="list-check">
                   <span>查看</span>

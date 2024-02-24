@@ -204,3 +204,106 @@ Mock.mock("/mock/getWorkdeskEchartsData", 'get', function (option) {
         },
     };
 })
+//查询权益数据
+Mock.mock("/mock/profitInfo", 'get', function (option) {
+    const randomNumber = () => {
+        return parseInt(Math.random() * 1000)
+    }
+    let arr = []
+    let arr2 = []
+    let arr3 = []
+    let arr4 = []
+    for (let i = 0; i < 20; i++) {
+        arr.push({
+            profitCost: randomNumber(),
+            profitRelate: randomNumber(),
+            profitUsetime: "2023/10/19 17:40",
+            profitAddr: "北京",
+            profitCard: randomNumber(),
+            profitPay: randomNumber(),
+            profitStatus: Math.round(Math.random() * 5),
+            key: i + 1
+        })
+        arr2.push({
+            time: "2024-02-16",
+            rate: parseInt(Math.random() * 5)
+        })
+        arr3.push({
+            time: "2024-02-16",
+            rate: parseInt(Math.random() * 5)
+        })
+        arr4.push({
+            time: "2024-02-16",
+            rate: parseInt(Math.random() * 5)
+        })
+    }
+    return {
+        code: 200,
+        data: {
+            custInfo: {
+                custName: "王雄",
+                status: "侯爵",
+                min: 10000,
+                max: 20000,
+                custNo: "6000001",
+                custIdType: "居民身份证",
+                custIdCard: "123445",
+                custPhone: "13345654569",
+                branch: "兴业银行郑州紫荆山路支行",
+                loginWay: "6000001",
+                loginIp: "192.168.1.137",
+                lastLogin: "2020-12-30 15:41:21"
+            },
+            list: arr,
+            total: arr.length,
+            hasList: arr2,
+            usedList: arr3,
+            expiredList: arr4,
+        },
+    };
+})
+//获取权益页面tableList
+Mock.mock("/mock/profitList", 'post', function (option) {
+    const value = JSON.parse(option.body).value
+    const randomNumber = () => {
+        return parseInt(Math.random() * 1000)
+    }
+    let arr = []
+    if (value === "4") {
+        for (let i = 0; i < 20; i++) {
+            arr.push({
+                usedRank: randomNumber(),
+                profitType: Math.round(Math.random() * 2),
+                containCount: randomNumber(),
+                useAndGet: "北京",
+                rate: parseInt(Math.random() * 100) + "%",
+                key: i + 1
+            })
+        }
+    } else if (value === "5") {
+        for (let i = 0; i < 12; i++) {
+            arr.push(randomNumber())
+        }
+    } else {
+        for (let i = 0; i < 20; i++) {
+            arr.push({
+                profitCost: randomNumber(),
+                profitRelate: randomNumber(),
+                profitUsetime: "2023/10/19 17:40",
+                profitAddr: "北京",
+                profitCard: randomNumber(),
+                profitPay: randomNumber(),
+                profitStatus: Math.round(Math.random() * 5),
+                key: i + 1
+            })
+        }
+    }
+    return {
+        code: 200,
+        data: {
+            list: arr,
+            total: arr.length
+        },
+    };
+})
+
