@@ -275,7 +275,8 @@ Mock.mock("/mock/profitList", 'post', function (option) {
                 usedRank: randomNumber(),
                 profitType: Math.round(Math.random() * 2),
                 containCount: randomNumber(),
-                useAndGet: "北京",
+                use:randomNumber(),
+                get:randomNumber(),
                 rate: parseInt(Math.random() * 100) + "%",
                 key: i + 1
             })

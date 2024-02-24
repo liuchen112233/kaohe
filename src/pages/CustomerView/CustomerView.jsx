@@ -43,6 +43,14 @@ const columns1 = [
   {
     title: "使用/领取",
     dataIndex: "useAndGet",
+    render: (text, record) => {
+      return (
+        <div>
+          <a>{record.use}</a>
+          <span>/{record.get}</span>
+        </div>
+      );
+    },
   },
   {
     title: "使用率",
@@ -87,7 +95,11 @@ const columns2 = [
     render: (text) => {
       return status.map((el) => {
         if (el.value == text) {
-          return el.label;
+          if (text == 1) {
+            return <a>{el.label}</a>;
+          } else {
+            return el.label;
+          }
         }
       });
     },
