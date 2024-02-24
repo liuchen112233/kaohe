@@ -1,8 +1,7 @@
 .list-container {
   margin-top: 16px;
   overflow-y: scroll;
-  height: 1500px;
-  padding-bottom: 250px;
+  height: 800px;
 }
 .list-container .list-box {
   display: flex;

@@ -188,18 +188,16 @@ export default function Index() {
   }, [radioValue]);
   const pagination = useMemo(() => {
     return {
-      total:total,
-      showTotal:()=>{
-        return (
-          <div>共{total}条</div>
-        )
+      total: total,
+      showTotal: () => {
+        return <div>共{total}条</div>;
       },
-      showQuickJumper:true,
-      pageSizeOptions:[10,20,50],
-      locale:"zhCN",
-      defaultPageSize:10,
-      showSizeChanger:true
-    }
+      showQuickJumper: true,
+      pageSizeOptions: [10, 20, 50],
+      locale: "zhCN",
+      defaultPageSize: 10,
+      showSizeChanger: true,
+    };
   }, [total]);
   return (
     <div className="container">
@@ -354,9 +352,7 @@ export default function Index() {
           </div>
         </Col>
         <Col span={8}>
-          <div style={{ height: "900px", overflow: "hidden" }}>
-            <Tabs defaultActiveKey="1" items={items} />
-          </div>
+          <Tabs defaultActiveKey="1" items={items} />
         </Col>
       </Row>
     </div>
