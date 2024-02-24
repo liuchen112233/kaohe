@@ -102,7 +102,9 @@ export default function Index() {
   const [usedList, setUsedList] = useState([]);
   const [expiredList, setExpiredList] = useState([]);
   const [radioValue, setRadioValue] = useState("1");
-  const [lineData, setLineData] = useState([150, 230, 224, 218, 135, 147, 260, 33, 444, 22, 223,666]);
+  const [lineData, setLineData] = useState([
+    150, 230, 224, 218, 135, 147, 260, 33, 444, 22, 223, 666,
+  ]);
   const items = [
     {
       key: "1",
@@ -133,7 +135,7 @@ export default function Index() {
     getProfitList({ value: value }).then((res) => {
       setRadioValue(value);
       if (value == 5) {
-        setLineData(res.data.list)
+        setLineData(res.data.list);
       } else {
         setList(res.data.list);
       }
@@ -184,7 +186,21 @@ export default function Index() {
       });
     }
   }, [radioValue]);
-
+  const pagination = useMemo(() => {
+    return {
+      total:total,
+      showTotal:()=>{
+        return (
+          <div>共{total}条</div>
+        )
+      },
+      showQuickJumper:true,
+      pageSizeOptions:[10,20,50],
+      locale:"zhCN",
+      defaultPageSize:10,
+      showSizeChanger:true
+    }
+  }, [total]);
   return (
     <div className="container">
       <Row gutter={32}>
@@ -322,6 +338,7 @@ export default function Index() {
                 <Table
                   columns={columnsMemo}
                   dataSource={list}
+                  pagination={pagination}
                   scroll={{ x: "100", y: 300 }}
                 />
               )}
