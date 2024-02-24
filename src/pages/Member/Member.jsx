@@ -1,7 +1,4 @@
-import React from 'react'
-
-export default function Member() {
-  return (
-    <div>会员中心</div>
-  )
-}
+import React from 'react';
+import { Empty } from 'antd';
+const App = () => <Empty />;
+export default App;

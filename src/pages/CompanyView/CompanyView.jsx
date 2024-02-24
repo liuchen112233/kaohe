@@ -425,6 +425,7 @@ export default function Index() {
                 dataSource={list}
                 loading={loading}
                 pagination={pagination}
+                scroll={{ x: "100", y: 300 }}
               />
             </div>
           </div>
