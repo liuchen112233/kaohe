@@ -169,6 +169,21 @@ export default function Index() {
     if (document.getElementById("lineChart")) {
       let lineChart = echarts.init(document.getElementById("lineChart"));
       lineChart.setOption({
+        tooltip:{
+          show:true,
+          trigger:"axis",
+          position:"right",
+          backgroundColor:"#fff",
+          axisPointer:{
+            type:"line"
+          },
+          formatter:(params)=>{
+            return `
+            <div style="font-size:14px">${params[0].name}</div>
+            <div style="font-size:16px">${params[0].value} 元</div>
+            `
+          }
+        },
         xAxis: {
           type: "category",
           data: [
@@ -193,6 +208,7 @@ export default function Index() {
           {
             data: lineData,
             type: "line",
+            symbol:"none"
           },
         ],
       });
