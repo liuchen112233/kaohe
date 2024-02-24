@@ -30,40 +30,7 @@ export default function ContentCom(props) {
 
   const clickTab = (key, e) => {
     dispatch(changeActiveKey(key));
-    const obj = tabList.find((el) => el.key == key);
-    dispatch(changeactiveMenu(obj.menuKeypath));
-
-    //关联tabData
-    let obj2 = null;
-    let arr = [];
-    if (obj.menuKeypath.length === 1) {
-      obj2 = menu.find((el) => el.key === obj.menuKey);
-      //面包屑数据
-      arr.push({
-        title: (
-          <div>
-            {obj2.icon}
-            <span style={{ marginLeft: "5px" }}>{obj2.label}</span>
-          </div>
-        ),
-      });
-    } else {
-      [...obj.menuKeypath].forEach((el) => {
-        if (obj2) {
-          obj2 = getObj(el, obj2);
-        } else {
-          obj2 = menu.find((item) => item.key === el);
-        }
-        arr.push({
-          title: (
-            <div>
-              {obj2.icon}
-              <span style={{ marginLeft: "5px" }}>{obj2.label}</span>
-            </div>
-          ),
-        });
-      });
-    }
+    const{arr,obj} = relateRouter(key)
     changeBreadData(arr);
     navigate(obj.path);
   };
@@ -117,9 +84,9 @@ export default function ContentCom(props) {
     dispatch(closeAllMenu());
     navigate("/index");
     //修改breadData
-    let arr=[]
-    const obj = menu.find(el=>el.key=='1')
-    if(obj){
+    let arr = [];
+    const obj = menu.find((el) => el.key == "1");
+    if (obj) {
       arr.push({
         title: (
           <div>
@@ -138,10 +105,50 @@ export default function ContentCom(props) {
   }, [activeKey]);
 
   useEffect(() => {
-    const obj = tabList.find((el) => el.key === activeKey);
-    sessionStorage.setItem("tabObj", JSON.stringify(obj));
+    const sobj = tabList.find((el) => el.key === activeKey);
+    sessionStorage.setItem("tabObj", JSON.stringify(sobj));
+    const{arr} = relateRouter(activeKey)
+    changeBreadData(arr);
   }, [activeKey]);
 
+  //路由关联方法
+  const relateRouter = (key) => {
+    const obj = tabList.find((el) => el.key == key);
+    dispatch(changeactiveMenu(obj.menuKeypath));
+
+    //关联tabData
+    let obj2 = null;
+    let arr = [];
+    if (obj.menuKeypath.length === 1) {
+      obj2 = menu.find((el) => el.key === obj.menuKey);
+      //面包屑数据
+      arr.push({
+        title: (
+          <div>
+            {obj2.icon}
+            <span style={{ marginLeft: "5px" }}>{obj2.label}</span>
+          </div>
+        ),
+      });
+    } else {
+      [...obj.menuKeypath].forEach((el) => {
+        if (obj2) {
+          obj2 = getObj(el, obj2);
+        } else {
+          obj2 = menu.find((item) => item.key === el);
+        }
+        arr.push({
+          title: (
+            <div>
+              {obj2.icon}
+              <span style={{ marginLeft: "5px" }}>{obj2.label}</span>
+            </div>
+          ),
+        });
+      });
+    }
+    return {obj,arr}
+  };
   return (
     <div>
       <div style={{ marginTop: "8px" }}>
