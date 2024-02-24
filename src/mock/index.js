@@ -275,8 +275,8 @@ Mock.mock("/mock/profitList", 'post', function (option) {
                 usedRank: randomNumber(),
                 profitType: Math.round(Math.random() * 2),
                 containCount: randomNumber(),
-                use:randomNumber(),
-                get:randomNumber(),
+                use: randomNumber(),
+                get: randomNumber(),
                 rate: parseInt(Math.random() * 100) + "%",
                 key: i + 1
             })
@@ -307,4 +307,121 @@ Mock.mock("/mock/profitList", 'post', function (option) {
         },
     };
 })
-
+//查询权益企业视图数据
+Mock.mock("/mock/companyProfitInfo", 'get', function (option) {
+    const randomNumber = () => {
+        return parseInt(Math.random() * 1000)
+    }
+    let arr = []
+    let arr2 = []
+    let arr3 = []
+    let arr4 = []
+    for (let i = 0; i < 20; i++) {
+        arr.push({
+            profitCost: randomNumber(),
+            profitRelate: randomNumber(),
+            profitUsetime: "2023/10/19 17:40",
+            profitAddr: "北京",
+            userId: randomNumber(),
+            profitCard: randomNumber(),
+            profitPay: randomNumber(),
+            profitStatus: Math.round(Math.random() * 5),
+            key: i + 1
+        })
+        arr2.push({
+            time: "2024-02-16",
+            rate: parseInt(Math.random() * 5)
+        })
+        arr3.push({
+            time: "2024-02-16",
+            rate: parseInt(Math.random() * 5)
+        })
+        arr4.push({
+            time: "2024-02-16",
+            rate: parseInt(Math.random() * 5)
+        })
+    }
+    return {
+        code: 200,
+        data: {
+            companyInfo: {
+                companyName: "上海XXX股份有限公司",
+                companyRank: "1级",
+                custNo: "E123",
+                branch: "兴业银行上海浦东新区支行",
+            },
+            list: arr,
+            total: arr.length,
+            hasList: arr2,
+            usedList: arr3,
+            expiredList: arr4,
+        },
+    };
+})
+let array = []
+const randomNumber = () => {
+    return parseInt(Math.random() * 1000)
+}
+for (let i = 0; i < 20; i++) {
+    array.push({
+        customerId: randomNumber(),
+        customerName: "成员名称",
+        customerPhone: randomNumber(),
+        customerIdtype: randomNumber(),
+        customerIdcard: randomNumber(),
+        key: i + 1
+    })
+}
+//获取企业视图页面tableList
+Mock.mock("/mock/companyProfitList", 'post', function (option) {
+    const value = JSON.parse(option.body).value
+    const randomNumber = () => {
+        return parseInt(Math.random() * 1000)
+    }
+    let arr = []
+    if (value === "1") {
+        for (let i = 0; i < 20; i++) {
+            arr.push({
+                profitCost: randomNumber(),
+                profitRelate: randomNumber(),
+                profitUsetime: "2023/10/19 17:40",
+                userId: randomNumber(),
+                profitCard: randomNumber(),
+                profitPay: randomNumber(),
+                profitStatus: Math.round(Math.random() * 5),
+                key: i + 1
+            })
+        }
+    } else if (value === "2") {
+        for (let i = 0; i < 20; i++) {
+            arr.push({
+                hasTime: "2023/10/19 17:40",
+                getAll: randomNumber(),
+                scoreBalance: randomNumber(),
+                usedCount: randomNumber(),
+                expiredCount: randomNumber(),
+                frozenCount: randomNumber(),
+                key: i + 1
+            })
+        }
+    } else if (value === "3") {
+        for (let i = 0; i < 20; i++) {
+            arr.push({
+                activityName: "活动名称",
+                joinTime: "2023/10/19 17:40",
+                status: Math.round(Math.random() * 2),
+                spreadStatus: Math.round(Math.random() * 2),
+                key: i + 1
+            })
+        }
+    } else {
+        arr = array
+    }
+    return {
+        code: 200,
+        data: {
+            list: arr,
+            total: arr.length
+        },
+    };
+})

@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Row, Col, Image, Slider, Radio, Table, Tabs } from "antd";
-import * as echarts from "echarts";
-import { LineChart } from "echarts/charts";
-import { getProfitInfo, getProfitList } from "@/api/api";
+import { Row, Col, Image, Radio, Table, Tabs,Button } from "antd";
+import { getCompanyProfitInfo, getCompanyProfitList } from "@/api/api";
 import List from "./List";
 import "./CompanyView.less";
 import touxiang from "@/assets/images/touxiang.png";
@@ -11,49 +9,8 @@ const status = [
   { label: "待使用", value: "1" },
   { label: "已使用", value: "2" },
 ];
-const profitType = [
-  { label: "票券类", value: "1" },
-  { label: "家乐福10元抵扣券", value: "2" },
-];
-echarts.use([LineChart]);
+
 const columns1 = [
-  {
-    title: "使用排名",
-    dataIndex: "usedRank",
-  },
-  {
-    title: "权益类型",
-    dataIndex: "profitType",
-    render: (text) => {
-      return profitType.map((el) => {
-        if (el.value == text) {
-          return <a>{el.label}</a>;
-        }
-      });
-    },
-  },
-  {
-    title: "包含权益数量",
-    dataIndex: "containCount",
-  },
-  {
-    title: "使用/领取",
-    dataIndex: "useAndGet",
-    render: (text, record) => {
-      return (
-        <div>
-          <a>{record.use}</a>
-          <span>/{record.get}</span>
-        </div>
-      );
-    },
-  },
-  {
-    title: "使用率",
-    dataIndex: "rate",
-  },
-];
-const columns2 = [
   {
     title: "权益名称",
     dataIndex: "profitName",
@@ -74,8 +31,8 @@ const columns2 = [
     dataIndex: "profitUsetime",
   },
   {
-    title: "使用地点",
-    dataIndex: "profitAddr",
+    title: "使用人ID",
+    dataIndex: "userId",
   },
   {
     title: "支付银行卡",
@@ -102,17 +59,88 @@ const columns2 = [
   },
 ];
 
+const columns2 = [
+  {
+    title: "积分领取时间",
+    dataIndex: "hasTime",
+  },
+  {
+    title: "获取总量",
+    dataIndex: "getAll",
+  },
+  {
+    title: "积分余量",
+    dataIndex: "scoreBalance",
+  },
+  {
+    title: "已使用数量",
+    dataIndex: "usedCount",
+  },
+  {
+    title: "过期数量",
+    dataIndex: "expiredCount",
+  },
+  {
+    title: "冻结数量",
+    dataIndex: "frozenCount",
+  },
+];
+const columns3 = [
+  {
+    title: "活动名称",
+    dataIndex: "activityName",
+  },
+  {
+    title: "参与时间",
+    dataIndex: "joinTime",
+  },
+  {
+    title: "达标状态",
+    dataIndex: "status",
+  },
+  {
+    title: "奖品发放状态",
+    dataIndex: "spreadStatus",
+  },
+];
+const columns4 = [
+  {
+    title: "客户号",
+    dataIndex: "customerId",
+  },
+  {
+    title: "成员名称",
+    dataIndex: "customerName",
+  },
+  {
+    title: "手机号",
+    dataIndex: "customerPhone",
+  },
+  {
+    title: "证件类型",
+    dataIndex: "customerIdtype",
+  },
+  {
+    title: "证件号码",
+    dataIndex: "customerIdcard",
+  },
+  {
+    title: "操作",
+    dataIndex: "operation",
+    render: () => {
+      return <div style={{ color: "red", cursor: "pointer" }}>移除</div>;
+    },
+  },
+];
+
 export default function Index() {
-  const [custInfo, setCustInfo] = useState({});
+  const [companyInfo, setCompanyInfo] = useState({});
   const [total, setTotal] = useState({});
   const [list, setList] = useState([]);
   const [hasList, setHasList] = useState([]);
   const [usedList, setUsedList] = useState([]);
   const [expiredList, setExpiredList] = useState([]);
   const [radioValue, setRadioValue] = useState("1");
-  const [lineData, setLineData] = useState([
-    150, 230, 224, 218, 135, 147, 260, 33, 444, 22, 223, 666,
-  ]);
   const items = [
     {
       key: "1",
@@ -132,28 +160,30 @@ export default function Index() {
   ];
 
   const columnsMemo = useMemo(() => {
-    if (radioValue == "4") {
-      return columns1;
-    } else {
-      return columns2;
+    let arr = [];
+    if (radioValue == 1) {
+      arr = columns1;
+    } else if (radioValue == 2) {
+      arr = columns2;
+    } else if (radioValue == 3) {
+      arr = columns3;
+    } else if (radioValue == 4) {
+      arr = columns4;
     }
+    return arr;
   }, [radioValue]);
 
   const radioChange = ({ target: { value } }) => {
-    getProfitList({ value: value }).then((res) => {
+    getCompanyProfitList({ value: value }).then((res) => {
       setRadioValue(value);
-      if (value == 5) {
-        setLineData(res.data.list);
-      } else {
-        setList(res.data.list);
-      }
+      setList(res.data.list);
     });
   };
 
   useEffect(() => {
-    getProfitInfo().then((res) => {
+    getCompanyProfitInfo().then((res) => {
       const { data } = res;
-      setCustInfo(data.custInfo);
+      setCompanyInfo(data.companyInfo);
       setList(data.list);
       setTotal(data.total);
       setHasList(data.hasList);
@@ -161,39 +191,7 @@ export default function Index() {
       setExpiredList(data.expiredList);
     });
   }, []);
-  useEffect(() => {
-    if (document.getElementById("lineChart")) {
-      let lineChart = echarts.init(document.getElementById("lineChart"));
-      lineChart.setOption({
-        xAxis: {
-          type: "category",
-          data: [
-            "1月",
-            "2月",
-            "3月",
-            "4月",
-            "5月",
-            "6月",
-            "7月",
-            "8月",
-            "9月",
-            "10月",
-            "11月",
-            "12月",
-          ],
-        },
-        yAxis: {
-          type: "value",
-        },
-        series: [
-          {
-            data: lineData,
-            type: "line",
-          },
-        ],
-      });
-    }
-  }, [radioValue]);
+  useEffect(() => {}, [radioValue]);
   const pagination = useMemo(() => {
     return {
       total: total,
@@ -208,7 +206,7 @@ export default function Index() {
     };
   }, [total]);
   return (
-    <div className="container">
+    <div className="companyContainer">
       <Row gutter={32}>
         <Col span={16}>
           <div style={{ overflow: "hidden", height: "100%" }}>
@@ -223,58 +221,13 @@ export default function Index() {
                 </div>
                 <div className="banner-info">
                   <div className="name">
-                    <span className="name2">{custInfo.custName}</span>
-                    <span className="tag">
-                      <span>**</span>
-                      <span>{custInfo.status}</span>
-                    </span>
+                    <span className="name2">{companyInfo.companyName}</span>
                   </div>
-                  <div className="process">
-                    <span>侯爵</span>
-                    <span>{custInfo.min}</span>
-                    <span>
-                      <Slider max={custInfo.max} min={custInfo.min} />
-                    </span>
-                    <span>{custInfo.max}</span>
+                  <div className="companyRank">
+                    企业等级：{companyInfo.companyRank}
                   </div>
-                  <div className="banner-detail">
-                    <div>
-                      <div>
-                        <span>客户号</span>
-                        <span>{custInfo.custNo}</span>
-                      </div>
-                      <div>
-                        <span>证件类型</span>
-                        <span>{custInfo.custIdType}</span>
-                      </div>
-                      <div>
-                        <span>证件号</span>
-                        <span>{custInfo.custIdCard}</span>
-                      </div>
-                      <div>
-                        <span>手机号</span>
-                        <span>{custInfo.custPhone}</span>
-                      </div>
-                    </div>
-                    <div>
-                      <div>
-                        <span>所属机构</span>
-                        <span>{custInfo.branch}</span>
-                      </div>
-                      <div>
-                        <span>登录渠道</span>
-                        <span>{custInfo.loginWay}</span>
-                      </div>
-                      <div>
-                        <span>登录ip</span>
-                        <span>{custInfo.loginIp}</span>
-                      </div>
-                      <div>
-                        <span>上次登录时间</span>
-                        <span>{custInfo.lastLogin}</span>
-                      </div>
-                    </div>
-                  </div>
+                  <div className="companyId">企业ID： {companyInfo.custNo}</div>
+                  <div>所属机构：{companyInfo.branch}</div>
                 </div>
               </div>
               <div style={{ marginBottom: "16px" }}>
@@ -286,26 +239,18 @@ export default function Index() {
                   <Radio.Button value="1">权益信息</Radio.Button>
                   <Radio.Button value="2">积分信息</Radio.Button>
                   <Radio.Button value="3">活动信息</Radio.Button>
-                  <Radio.Button value="4">使用权益编号</Radio.Button>
-                  <Radio.Button value="5">账户资产分析</Radio.Button>
+                  <Radio.Button value="4">企业关键人列表</Radio.Button>
                 </Radio.Group>
               </div>
-              {radioValue != 5 && (
-                <Table
-                  columns={columnsMemo}
-                  dataSource={list}
-                  pagination={pagination}
-                  scroll={{ x: "100", y: 300 }}
-                />
-              )}
-              {radioValue == 5 && (
-                <div style={{ height: "400px" }}>
-                  <div
-                    style={{ width: "100%", height: "100%" }}
-                    id="lineChart"
-                  ></div>
-                </div>
-              )}
+              {radioValue=="4" && <div style={{marginBottom:"10px"}}>
+              <Button>新增</Button>
+              </div>}
+              <Table
+                columns={columnsMemo}
+                dataSource={list}
+                pagination={pagination}
+                scroll={{ x: "100", y: 300 }}
+              />
             </div>
           </div>
         </Col>

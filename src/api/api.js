@@ -11,8 +11,10 @@ export const getWorkdeskEchartsData = () => get('/getWorkdeskEchartsData')
 export const getProfitInfo = () => get('/profitInfo')
 //获取权益列表页面
 export const getProfitList = p => post('/profitList',p)
-
-
+//获取企业视图页面数据
+export const getCompanyProfitInfo = () => get('/companyProfitInfo')
+//获取企业视图权益列表页面
+export const getCompanyProfitList = p => post('/companyProfitList',p)
 
 
 

@@ -6,7 +6,7 @@ import "./List.less";
 export default function List(props) {
   const { list } = props;
   return (
-    <div className="list-container">
+    <div className="companyList-container">
       {list.map((el, index) => {
         return (
           <div className="list-box" key={index}>
