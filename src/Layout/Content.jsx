@@ -30,7 +30,7 @@ export default function ContentCom(props) {
 
   const clickTab = (key, e) => {
     dispatch(changeActiveKey(key));
-    const{arr,obj} = relateRouter(key)
+    const { arr, obj } = relateRouter(key);
     changeBreadData(arr);
     navigate(obj.path);
   };
@@ -53,12 +53,11 @@ export default function ContentCom(props) {
 
   const remove = (targetKey) => {
     const index = tabList.findIndex((el) => el.key === targetKey);
-    if (
-      index !== 0 &&
-      index === tabList.length - 1 &&
-      tabList[index].key === activeKey
-    ) {
-      let path = tabList[index - 1].path;
+    if (index !== 0 && tabList[index].key === activeKey) {
+      let path =
+        index === tabList.length - 1
+          ? tabList[index - 1].path
+          : tabList[index + 1].path;
       if (path) {
         navigate(path);
       }
@@ -107,7 +106,7 @@ export default function ContentCom(props) {
   useEffect(() => {
     const sobj = tabList.find((el) => el.key === activeKey);
     sessionStorage.setItem("tabObj", JSON.stringify(sobj));
-    const{arr} = relateRouter(activeKey)
+    const { arr } = relateRouter(activeKey);
     changeBreadData(arr);
   }, [activeKey]);
 
@@ -147,7 +146,7 @@ export default function ContentCom(props) {
         });
       });
     }
-    return {obj,arr}
+    return { obj, arr };
   };
   return (
     <div>

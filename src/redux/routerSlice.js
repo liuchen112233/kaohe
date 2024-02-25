@@ -24,9 +24,9 @@ const routerSlice = createSlice({
         //关闭单个菜单
         closeMenu(state, action) {
             const index = state.tabList.findIndex(el => el.key === action.payload)
-            if (index !== 0 && index === state.tabList.length - 1 && state.tabList[index].key === state.activeKey) {
-                state.activeKey = state.tabList[index - 1].key
-                state.activeMenu = state.tabList[index - 1].menuKeypath
+            if (index !== 0 && state.tabList[index].key === state.activeKey) {
+                state.activeKey = index === state.tabList.length - 1 ? state.tabList[index - 1].key : state.tabList[index + 1].key
+                state.activeMenu = index === state.tabList.length - 1 ? state.tabList[index - 1].menuKeypath : state.tabList[index + 1].menuKeypath
             }
             state.tabList.splice(index, 1)
         },
