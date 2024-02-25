@@ -320,7 +320,7 @@ export default function Index() {
                       <div>
                         <div>
                           <Image
-                            className="img"
+                            className="profitShow-box-img"
                             src={starBucks}
                             preview={false}
                           ></Image>

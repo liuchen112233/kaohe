@@ -10,7 +10,7 @@ export default function List(props) {
       {list.map((el, index) => {
         return (
           <div className="list-box" key={index}>
-            <div className="img">
+            <div className="list-box-img">
               <Image preview={false} src={logo} />
             </div>
             <div className="list-content">
