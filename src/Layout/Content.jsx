@@ -113,6 +113,7 @@ export default function ContentCom(props) {
 
   //路由关联方法
   const relateRouter = (key) => {
+    console.log(key);
     const obj = tabList.find((el) => el.key == key);
     dispatch(changeactiveMenu(obj.menuKeypath));
 

@@ -1,9 +1,9 @@
 import menu from "../menu/menu";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Header from "./Header";
 import Sider from "./Sider";
 import Content from "./Content";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { closeAllMenu } from "@/redux/routerSlice.js";
 import {
   openMenu,
@@ -13,8 +13,11 @@ import {
 import { Layout } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-export default function LayoutCom() {
+export default function LayoutCom(props) {
+  const { pathname } = props;
   const dispatch = useDispatch();
+  const { tabList } = useSelector((state) => state.routerSlice);
+  const [refreshed, setRefreshed] = useState(false);
   const [breadData, setBreadData] = useState([
     {
       title: (
@@ -38,10 +41,27 @@ export default function LayoutCom() {
       return obj;
     }
   };
+
+  const setRouteChange = () => {
+    const obj = tabList.find((el) => el.path == pathname);
+    if (obj) {
+      dispatch(changeActiveKey(obj.key));
+    }
+  };
+  //监听路由变化，非刷新时设置路由基建
+  useEffect(() => {
+    if (refreshed) {
+      setRefreshed(false);
+    } else {
+      setRouteChange();
+    }
+  }, [pathname]);
+
   useMemo(() => {
     //首次加载时查询tab缓存
     const tabobj = JSON.parse(sessionStorage.getItem("tabObj"));
     if (tabobj) {
+      setRefreshed(true);
       dispatch(changeActiveKey(tabobj.key));
       dispatch(changeactiveMenu(tabobj.menuKeypath));
       if (tabobj.key != "1") {

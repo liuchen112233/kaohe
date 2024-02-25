@@ -211,7 +211,6 @@ export default function Index() {
         setLoading(true);
         deleteProfitList({ key })
           .then((res) => {
-            console.log(res);
             getList("4");
           })
           .catch((err) => {})
@@ -244,7 +243,6 @@ export default function Index() {
     companyAddnewQuery()
       .then((res) => {
         setModalList([...res.data.list]);
-        console.log(res);
         setTotalModal(res.data.total);
       })
       .catch((err) => {
@@ -301,7 +299,6 @@ export default function Index() {
     setSelectedRows(newSelectedRows)
   };
   const handleOk = () => {
-    console.log(selectedRows);
     companyAddnew({arr:selectedRows}).then(res=>{
         notification.success({
             message:"提示",
@@ -344,13 +341,14 @@ export default function Index() {
     if(page=='reset'){
         form.resetFields()
     }
+    setIsModalLoading(true)
     companyAddnewQuery().then(res=>{
-        console.log(res);
         setModalList(res.data.list)
         setTotalModal(res.data.total)
     }).finally(()=>{
         setSelectedRowKeys([])
         setSelectedRows([])
+        setIsModalLoading(false)
     })
   }
   const paginationModal = useMemo(() => {

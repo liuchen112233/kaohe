@@ -364,6 +364,7 @@ export default function Index() {
                 <Table
                   columns={columnsMemo}
                   dataSource={list}
+                  rowKey={"key"}
                   pagination={pagination}
                   scroll={{ x: "100", y: 300 }}
                 />

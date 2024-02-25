@@ -226,15 +226,18 @@ Mock.mock("/mock/profitInfo", 'get', function (option) {
         })
         arr2.push({
             time: "2024-02-16",
-            rate: parseInt(Math.random() * 5)
+            rate: parseInt(Math.random() * 5),
+            key: i + 1
         })
         arr3.push({
             time: "2024-02-16",
-            rate: parseInt(Math.random() * 5)
+            rate: parseInt(Math.random() * 5),
+            key: i + 1
         })
         arr4.push({
             time: "2024-02-16",
-            rate: parseInt(Math.random() * 5)
+            rate: parseInt(Math.random() * 5),
+            key: i + 1
         })
     }
     return {

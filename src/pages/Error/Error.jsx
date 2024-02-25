@@ -8,16 +8,6 @@ const Error = () => {
       status="500"
       title="500"
       subTitle="Sorry, something went wrong."
-      extra={
-        <Button
-          onClick={() => {
-            navigate("/index");
-          }}
-          type="primary"
-        >
-          Back Home
-        </Button>
-      }
     />
   );
 };
